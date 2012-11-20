@@ -33,7 +33,7 @@
 			</table>
 			<div>
 				<input id="submitButton" type="submit" value="Log Me In!"/>
-				<a href="createAccount.php">Need to create an account?</a>
+				<a href="create.php">Need to create an account?</a>
 			</div>
 		</form>
 	</body>
