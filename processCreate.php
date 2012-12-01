@@ -60,7 +60,7 @@
 	//TODO: Process and store image, get an imageID from DB
 	
 	if ($Success){
-	    $prepQuery = $db->prepare("INSERT INTO users VALUES (0, ?, ?, ?, ?, 0, ?, ?);");
+	    $prepQuery = $db->prepare("INSERT INTO users VALUES (0, ?, ?, ?, ?, 0, ?, ?)");
 	    $SHApass = SHA1($pass);
 	    $prepQuery->bind_param('sssssi', $fname, $lname, $email, $SHApass, $gender, $age);
 	    $prepQuery->execute();

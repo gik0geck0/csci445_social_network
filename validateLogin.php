@@ -11,9 +11,6 @@
         // Section for logging process ----------- 
         $user = trim($_POST['username']); 
         $pass = trim($_POST['password']); 
-<<<<<<< HEAD
-        $encrypted_pass = sha1($pass);
-=======
         login($user, $pass);
     } else if(isset($_GET['username'])  && isset($GET['password'])) {
     	$user = trim($_GET['username']); 
@@ -22,8 +19,6 @@
     }
         
 	function login($user, $pass) {
-		//I NEED TO PUT MORE STERALIZATION IN HERE!!!
->>>>>>> 61ae79666e1e3895433eef0428d86fdb011a48e7
 
         $encrypted_pass = sha1($pass);
 
@@ -36,16 +31,9 @@
             // Redirect to the home page. 
             header("Location: home.php"); 
         } else { 
-<<<<<<< HEAD
         	//Redirect to login page with error
         	header("Location: index.php?error=1");
         } 
             
     } 
 ?> 
-=======
-        	header("Location: index.php?error=1");
-        } 
-	}        
-?> 
->>>>>>> 61ae79666e1e3895433eef0428d86fdb011a48e7
