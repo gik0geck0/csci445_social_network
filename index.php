@@ -9,7 +9,7 @@
 				YASMS is Yet Another Social Media Site! By having an account, you will be able to find friends who are online, chat with them, share photos with them, and view their status updates.
 			</p>
 			<p>
-				Why choose YASMS over other sites? Simple: unlike our competitors, we haven't been taken over by trolls, internet memes, and your parents.
+				Why choose YASMS over other sites? Simple: unlike our competitors, we haven't been taken over by trolls, internet memes, or your parents.
 			</p>
 		</div>
 		<form name="loginForm" action="homePage.php" method="post">
