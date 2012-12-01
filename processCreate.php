@@ -35,6 +35,8 @@
 			if ( mysqli_connect_errno( ) )  {
 				$Success = false;
 			}
-			
+			$preparedQuery = $db->prepare("SELECT UID FROM users WHERE email = ?");
+			$preparedQuery->bind_param($email);
+			$preparedQuery->bind_result($UID_result);
         ?>
         <h1>User
