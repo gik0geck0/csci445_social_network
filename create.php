@@ -80,9 +80,9 @@
 						Gender:
 					</td>
 					<td>
-						Male: <input type="radio" name="gender" value="male" checked = "true"> 
-						Female: <input type="radio" name="gender" value="female">
-						Other: <input type="radio" name="gender" value="other">
+						Male: <input type="radio" name="gender" value="Male" checked = "true"> 
+						Female: <input type="radio" name="gender" value="Female">
+						Other: <input type="radio" name="gender" value="Other">
 					</td>
 					<td>
 						<div id="genderError"></div>
