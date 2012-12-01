@@ -14,7 +14,7 @@
         // Section for logging process ----------- 
         $user = trim($_POST['username']); 
         $pass = trim($_POST['password']); 
-        $encrypted_pass = sha1($pass)
+        $encrypted_pass = sha1($pass);
 
 		$login_query = "select UID from users where Email = $user and Password = $encrypted_pass";
 		$login = $db->query($login_query);
@@ -26,7 +26,7 @@
             header("Location: home.php"); 
         } else { 
         	//Redirect to login page with error
-        	header("Location: index.php?error=1")
+        	header("Location: index.php?error=1");
         } 
             
     } 

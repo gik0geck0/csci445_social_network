@@ -7,7 +7,7 @@
 		<div>
 			<h1>Create a New Profile</h1>
 		</div>
-		<form name="createUser" action="" method="post">
+		<form name="createUser" action="processCreate.php" method="post">
 			<table>
 				<tr>
 					<td>
