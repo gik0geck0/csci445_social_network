@@ -12,7 +12,7 @@
 				Why choose YASMS over other sites? Simple: unlike our competitors, we haven't been taken over by trolls, internet memes, or your parents.
 			</p>
 		</div>
-		<form name="loginForm" action="homePage.php" method="post">
+		<form name="loginForm" action="validateLogin.php" method="post">
 			<table border="1">
 				<tr>
 					<td>
@@ -34,6 +34,8 @@
 			<div>
 				<input id="submitButton" type="submit" value="Log Me In!"/>
 				<a href="create.php">Need to create an account?</a>
+			</div>
+			<div id="errors">
 			</div>
 		</form>
 	</body>
