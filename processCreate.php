@@ -23,6 +23,7 @@
                        'team10', 
                        'tangerine', 
                        'team10_social');
+	$db->select_db('team10_social');
                        
     // TODO: Make this more robustly visible to the user
 	if ( mysqli_connect_errno( ) )  {
@@ -40,6 +41,7 @@
 	    $Success = false;
 	    $Error[] = "E-Mail already in use.";
 	}
+	$preparedQuery->close();
 	
 	// Verify gender
 	if (!in_array($gender, array("Male", "Female", "Other"))){
@@ -58,14 +60,16 @@
 	//TODO: Process and store image, get an imageID from DB
 	
 	if ($Success){
-	    $preparedQuery = $db->prepare("INSERT INTO users VALUES (NULL, ?, ?, ?, ?, 0, ?, ?);");
+	    $prepQuery = $db->prepare("INSERT INTO users VALUES (0, ?, ?, ?, ?, 0, ?, ?);");
 	    $SHApass = SHA1($pass);
-	    $preparedQuery->bind_param('sssssi', $fname, $lname, $email, $SHApass, $gender, $age);
-	    $preparedQuery->execute();
+	    $prepQuery->bind_param('sssssi', $fname, $lname, $email, $SHApass, $gender, $age);
+	    $prepQuery->execute();
 	    if ( $db->connect_errno )  {
 		    echo $db->connect_error;
+		    $prepQuery->close();
 	    }
 	    else {
+		    $prepQuery->close();
 	        // Redirect to login validation page
 	        header("Location: validateLogin.php?username=$email&password=$SHApass");
 	    }
@@ -73,5 +77,5 @@
 	 else{
 	    echo "Errors:";
 	    print_r($Error);
-	}
+	 }
 ?>

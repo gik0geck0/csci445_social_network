@@ -38,7 +38,7 @@
 			<div id="errors">
 				<?php 
 					if($_GET['error']==1) {
-						echo "<p>Invalid username or password</p>"
+						echo "<p>Invalid username or password</p>";
 					}
 				?>
 			</div>
