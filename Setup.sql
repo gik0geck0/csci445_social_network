@@ -9,7 +9,7 @@ CREATE TABLE users(
     FirstName varchar(255) NOT NULL,
     LastName varchar(255) NOT NULL,
     Email varchar(255) NOT NULL,
-    Pasword varchar(255) NOT NULL,
+    Password varchar(255) NOT NULL,
     ImageID int NOT NULL,
     Gender varchar(255),
     Age int,
