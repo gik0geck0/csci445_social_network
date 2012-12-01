@@ -1,5 +1,3 @@
-
-
 <?php 
 
 	@ $db = new mysqli('localhost', 'team10', 'tangerine', 'team10_social');
@@ -7,16 +5,18 @@
 		echo 'Error: could not connect to database. Better luck next time, punk!';
 		exit;
 	}
-	
 
 	// Normal user section - Not logged ------ 
     if(isset($_POST['username']) && isset($_POST['password'])) { 
         // Section for logging process ----------- 
         $user = trim($_POST['username']); 
         $pass = trim($_POST['password']); 
-        $encrypted_pass = sha1($pass)
 
-		$login_query = "select UID from users where Email = $user and Password = $encrypted_pass";
+        //I NEED TO PUT MORE STERALIZATION IN HERE!!!
+
+        $encrypted_pass = sha1($pass);
+
+		$login_query = "select UID from users where Email = \"$user\" and Password = \"$pass\"";
 		$login = $db->query($login_query);
         if($login->num_rows != 0) { 
             $UID = $login->fetch_assoc(); 
@@ -25,8 +25,7 @@
             // Redirect to the home page. 
             header("Location: home.php"); 
         } else { 
-        	//Redirect to login page with error
-        	header("Location: index.php?error=1")
+        	header("Location: index.php?error=1");
         } 
             
     } 

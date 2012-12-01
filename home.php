@@ -1,9 +1,11 @@
 <!DOCTYPE HTML>
+
+<?php include("checkLogin.php"); ?>
+
 <html>
 	<head>
 	</head>
 	<body>
-		<?php include("checkLogin.php"); ?>
 		<?php include("menu.php"); ?>
 
 		<?php 
