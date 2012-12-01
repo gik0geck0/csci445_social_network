@@ -9,7 +9,7 @@
 		<?php include("menu.php"); ?>
 
 		<?php 
-			echo "logged in user UID: ".$_SESSION['user'];
+			echo "<p>logged in user UID: ".$_SESSION['user']."</p>";
 		?>
 	</body>
 <html>
