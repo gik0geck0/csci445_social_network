@@ -9,12 +9,13 @@ CREATE TABLE users(
     FirstName varchar(255) NOT NULL,
     LastName varchar(255) NOT NULL,
     Email varchar(255) NOT NULL,
-    Pasword varchar(255) NOT NULL,
+    Password varchar(255) NOT NULL,
     ImageID int NOT NULL,
     Gender varchar(255),
     Age int,
     PRIMARY KEY (UID),
-    FOREIGN KEY (ImageID) REFERENCES images(IID)
+    FOREIGN KEY (ImageID) REFERENCES images(IID),
+    UNIQUE(Email)
     );
 
 CREATE TABLE statuses(

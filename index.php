@@ -36,6 +36,11 @@
 				<a href="create.php">Need to create an account?</a>
 			</div>
 			<div id="errors">
+				<?php 
+					if($_GET['error']==1) {
+						echo "<p>Invalid username or password</p>"
+					}
+				?>
 			</div>
 		</form>
 	</body>
