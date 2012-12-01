@@ -14,7 +14,8 @@ CREATE TABLE users(
     Gender varchar(255),
     Age int,
     PRIMARY KEY (UID),
-    FOREIGN KEY (ImageID) REFERENCES images(IID)
+    FOREIGN KEY (ImageID) REFERENCES images(IID),
+    UNIQUE(Email)
     );
 
 CREATE TABLE statuses(
