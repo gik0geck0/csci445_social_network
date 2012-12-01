@@ -1,6 +1,6 @@
 <?php
-    $fname = $_POST['firstname'];
-    $lname = $_POST['lastname'];
+    $fname = $_POST['firstName'];
+    $lname = $_POST['lastName'];
     $email = $_POST['email'];
     $pass  = $_POST['password']; // HASH THIS
     $vpass = $_POST['veriPassword']; // AND THIS?
@@ -63,6 +63,12 @@
 	    $prepQuery = $db->prepare("INSERT INTO users VALUES (0, ?, ?, ?, ?, 0, ?, ?)");
 	    $SHApass = SHA1($pass);
 	    $prepQuery->bind_param('sssssi', $fname, $lname, $email, $SHApass, $gender, $age);
+	    var_dump($fname);
+	    var_dump($lname);
+	    var_dump($email);
+	    var_dump($SHApass);
+	    var_dump($gender);
+	    var_dump($age);
 	    $prepQuery->execute();
 	    if ( $db->connect_errno )  {
 		    echo $db->connect_error;
@@ -71,6 +77,7 @@
 	    else {
 		    $prepQuery->close();
 	        // Redirect to login validation page
+	        // This is bad, since the hash is theoretically visible
 	        header("Location: validateLogin.php?username=$email&password=$SHApass");
 	    }
 	 }
