@@ -1,6 +1,6 @@
 <?php 
 	@ session_start();
-	@ $db = new mysqli('localhost', 'team10', 'tangerine', 'team10_social');
+	$db = new mysqli('localhost', 'team10', 'tangerine', 'team10_social');
 	if (mysqli_connect_errno()) {
 		echo 'Error: could not connect to database. Better luck next time, punk!';
 		exit;

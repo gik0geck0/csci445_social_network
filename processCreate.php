@@ -19,7 +19,7 @@
     }            
     
     // Grab the database connection
-    @ $db = new mysqli('localhost', 
+    $db = new mysqli('localhost', 
                        'team10', 
                        'tangerine', 
                        'team10_social');
@@ -27,9 +27,11 @@
                        
     // TODO: Make this more robustly visible to the user
 	if ( mysqli_connect_errno( ) )  {
+		echo 'db connect error on connect';
 		$Success = false;
 		$Errors[] = "Error connecting to server (databse).";
 	}
+	echo 'connected to DB successfully';
 	
 	// See if email is already in use
 	$preparedQuery = $db->prepare("SELECT UID FROM users WHERE email = ?");
@@ -71,10 +73,12 @@
 	    var_dump($age);
 	    $prepQuery->execute();
 	    if ( $db->connect_errno )  {
+			echo 'db connect error when executing';
 		    echo $db->connect_error;
 		    $prepQuery->close();
 	    }
 	    else {
+			echo 'done executing query';
 		    $prepQuery->close();
 	        // Redirect to login validation page
 	        // This is bad, since the hash is theoretically visible
