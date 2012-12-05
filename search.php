@@ -38,8 +38,8 @@
 				}
 
 				$sQ = "SELECT DISTINCT f_as_user.User AS user0, f_as_user.Target AS target0, f_as_tgt.User as user1, f_as_tgt.Target as target1, users.* FROM users ";
-				$sQ .= "LEFT OUTER JOIN friendships f_as_user ON f_as_user.User = users.UID ";
-				$sQ .= "LEFT OUTER JOIN friendships f_as_tgt ON f_as_tgt.Target = users.UID ";
+				$sQ .= "LEFT OUTER JOIN friendships f_as_user ON f_as_user.User = ".$_SESSION['user']." ";
+				$sQ .= "LEFT OUTER JOIN friendships f_as_tgt ON f_as_tgt.Target = ".$_SESSION['user']." ";
 				$num = 0;
 
 				$sanitizedQuery = sanitize($_GET['query'], $db);

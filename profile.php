@@ -20,7 +20,8 @@
 					echo 'Error: could not connect to database. Better luck next time, punk!';
 					exit;
 				}
-
+				
+				/* TODO : make this button
 			    if(isset($_POST['target'])) {
 			        $target_user = $_POST['target'];
 			    } elseif(isset($_GET['target'])) {
@@ -101,6 +102,7 @@
 
 
 			?>
+			*/
 		</div>
 
 	</body>
