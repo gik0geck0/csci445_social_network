@@ -116,7 +116,7 @@
 										?>
 											You are already friends!
 										<?
-									} elseif ($row['user0']) {
+									} elseif ($row['user1']) {
 										# you have already sent out a pending request
 										?>
 											Waiting for acceptance
