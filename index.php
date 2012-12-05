@@ -16,7 +16,7 @@
 			<table border="1">
 				<tr>
 					<td>
-						Username: 
+						Email: 
 					</td>
 					<td>
 						<input type="text" name="username">

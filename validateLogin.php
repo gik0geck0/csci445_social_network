@@ -11,12 +11,12 @@
         // Section for logging process ----------- 
         $user = trim($_POST['username']); 
         $pass = trim($_POST['password']); 
-        
+
         $encrypted_pass = sha1($pass);
 
         login($user, $encrypted_pass, $db);
 
-    } else if(isset($_GET['username'])  && isset($GET['password'])) {
+    } elseif(isset($_GET['username'])  && isset($GET['password'])) {
     	$user = trim($_GET['username']); 
         $pass = trim($_GET['password']); 
         login($user, $pass, $db);
@@ -24,7 +24,7 @@
         
 	function login($user, $pass, $db) {
 
-		$login_query = "select UID from users where Email = \"$user\" and Password = \"$encrypted_pass\"";
+		$login_query = "select UID from users where Email = \"$user\" and Password = \"$pass\"";
 		$login = $db->query($login_query);
         if($login->num_rows != 0) { 
             $UID = $login->fetch_assoc(); 

@@ -31,7 +31,6 @@
 		$Success = false;
 		$Errors[] = "Error connecting to server (databse).";
 	}
-	echo 'connected to DB successfully';
 	
 	// See if email is already in use
 	$preparedQuery = $db->prepare("SELECT UID FROM users WHERE email = ?");
@@ -80,9 +79,9 @@
 	    else {
 			echo 'done executing query';
 		    $prepQuery->close();
-	        // Redirect to login validation page
+	        // Redirect to index page
 	        // This is bad, since the hash is theoretically visible
-	        header("Location: validateLogin.php?username=$email&password=$SHApass");
+	        header("Location: index.php");
 	    }
 	 }
 	 else{
