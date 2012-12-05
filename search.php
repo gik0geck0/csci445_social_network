@@ -37,7 +37,7 @@
 					$_GET['query'] = "";
 				}
 
-				$sQ = "SELECT DISTINCT f_as_user.User AS user0, f_as_user.Target AS target0, f_as_tgt.User as user1, f_as_tgt_Target as target1, * FROM users ";
+				$sQ = "SELECT DISTINCT f_as_user.User AS user0, f_as_user.Target AS target0, f_as_tgt.User as user1, f_as_tgt.Target as target1, users.* FROM users ";
 				$num = 0;
 
 				$sanitizedQuery = sanitize($_GET['query'], $db);
