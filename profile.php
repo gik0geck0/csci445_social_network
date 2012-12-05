@@ -44,68 +44,72 @@
 				echo "invalid user requested";
 			}
 
-			$friendshipQuery = "SELECT * FROM friendships WHERE (User = ".$user." AND Target = ".$target_user.") OR ( User = ".$target_user." AND Target = ".$user." ";
-			$freindshipResult = $db->query($friendshipQuery);
-			if (!$result) {
-				echo "Cannot search for your friendship status right now. Please try again later.<br/>";
-				# echo "Error: ".$db->error;
-				exit();
-			}
-			
-			$userOnTarget = -1;
-			$targetOnUser = -1;
-			while ($row = $result->fetch_assoc()) {
-				# for each row...
-				if ($row['User'] == $user) {
-					# set user on target
-					$userOnTarget = $row['Status'];
-				} elseif ($row['User'] == $target_user) {
-					$targetOnUser = $row['Status'];
+			if ($user <> $target_user) {
+				$friendshipQuery = "SELECT * FROM friendships WHERE (User = ".$user." AND Target = ".$target_user.") OR ( User = ".$target_user." AND Target = ".$user.") ";
+				$friendshipResult = $db->query($friendshipQuery);
+				if (!$friendshipResult) {
+					echo "Cannot search for your friendship status right now. Please try again later.<br/>";
+					echo "Error: ".$db->error;
+					exit();
 				}
-			}
+				
+				$userOnTarget = -1;
+				$targetOnUser = -1;
+				while ($row = $friendshipResult->fetch_assoc()) {
+					# for each row...
+					if ($row['User'] == $user) {
+						# set user on target
+						$userOnTarget = $row['Status'];
+					} elseif ($row['User'] == $target_user) {
+						$targetOnUser = $row['Status'];
+					}
+				}
+				?>
+			   <form action="processFriend.php" method="POST" >
+				   <tr>
+						<td> <?
+							if ($targetOnUser == 1) {
+								# they are awaiting a response
+								?>
+								Would you like to be his/her friend?
+								<table>
+									<tr>
+										<td>Accept</td>
+										<td>Decline</td>
+									</tr>
+									<tr>
+										<td><input type="radio" name="acceptDeny" value="2"></td>
+										<td><input type="radio" name="acceptDeny" value="0"></td>
+										<td><input type="submit" value="Send Response"></td>
+									</tr>
+								</table>
+								<?
+							} elseif ($userOnTarget == 2 and $targetOnUser == 2) {
+								# you already have a mutual friendship
+								?>
+								You are already friends!
+								<?
+							} elseif ($userOnTarget == 1) {
+								# you have already sent out a pending request
+								?>
+								Waiting for acceptance
+								<?
+							} elseif ($userOnTarget <= 0 and $targetOnUser <= 0) {
+								# no friendship at all.
+								?>
+								<input type="submit" value="Send friendship request" />
+								<?
+							}
+							# else does nothing.. makes a problem more visible
+							?>
+							<input type="hidden" name="user" value="<?=$user ?>" />
+							<input type="hidden" name="target" value="<?=$target_user ?>" />
+						</td>
+					</tr>
+				</form>
+			<?
+			}	// end if user <> target_user
 			?>
-	   <form action="processFriend.php" method="POST" >
-			   <tr>
-					<td> <?
-						if ($targetOnUser == 1) {
-							# they are awaiting a response
-							?>
-							Would you like to be his/her friend?
-							<table>
-								<tr>
-									<td>Accept</td>
-									<td>Decline</td>
-								</tr>
-								<tr>
-									<td><input type="radio" name="acceptDeny" value="2"></td>
-									<td><input type="radio" name="acceptDeny" value="0"></td>
-									<td><input type="submit" value="Send Response"></td>
-								</tr>
-							</table>
-							<?
-						} elseif ($userOnTarget == 2 and $targetOnUser == 2) {
-							# you already have a mutual friendship
-							?>
-							You are already friends!
-							<?
-						} elseif ($userOnTarget == 1) {
-							# you have already sent out a pending request
-							?>
-							Waiting for acceptance
-							<?
-						} elseif ($userOnTarget <= 0 and $targetOnUser <= 0) {
-							# no friendship at all.
-							?>
-							<input type="submit" value="Send friendship request" />
-							<?
-						}
-						# else does nothing.. makes a problem more visible
-						?>
-						<input type="hidden" name="user" value="<?=$user ?>" />
-						<input type="hidden" name="target" value="<?=$target_user ?>" />
-					</td>
-				</tr>
-			</form>
 		</div>
 	</body>
 </html>
