@@ -32,26 +32,58 @@
 						$Success = false;
 						$Errors[] = "Error connecting to server (database).";
 					}
+					echo 'Connected to DB just fine';
 
-					$sQ = "SELECT * FROM users";
+					$sQ = "SELECT DISTINCT * FROM users ";
 					$num = 0;
 
-					$sanitizedQuery = sanitize($_GET['query']);
+					$sanitizedQuery = sanitize($_GET['query'], $db);
+					echo 'Sanitized: '.$sanitizedQuery;
 					$spaceSplit = explode(" ", $sanitizedQuery);
 
 					if ($_GET['searchFor'] == "user") {
 						foreach($spaceSplit as $word) {
-							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% "
-							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% "
-							$num = $num + 1;
+							if (strlen($word) >= 1) {
+								if ($num == 0) {
+									$sQ .= "WHERE ";
+									$sQ .= "users.FirstName like '%".$word."%' ";
+								} else {
+									$sQ .= "OR users.FirstName like '%".$word."%' ";
+								}
+								$num = $num + 1;
+								$sQ .= "OR users.LastName like '%".$word."%' ";
+								$num = $num + 1;
+							}
 						}
-					} elseif () {
+					} elseif ($_GET['searchFor'] == "email") {
 						foreach($spaceSplit as $word) {
-							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% "
-							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% "
-							$num = $num + 1;
+							if (strlen($word) >= 1) {
+								if ($num == 0) {
+									$sQ .= "WHERE ";
+									$sQ .= "users.Email like '%".$word."%' ";
+								} else {
+									$sQ .= "OR users.Email like '%".$word."%' ";
+								}
+								$num = $num + 1;
+							}
 						}
 					}
+					echo "Querying: ".$sQ;
+					$result = $db->query($sQ);
+
+					if (!$result) {
+						echo "Query failed!!!<br/>";
+						echo "Error: ".$db->error;
+						exit();
+					}
+					echo "Yay, we got results!";
+					while ($row = $result->fetch_assoc()) {
+						echo "Result: ".$row['FirstName']."<br/>";
+
+					}
+					# Display the results
+
+
 				}
 			?>
 		</div>
