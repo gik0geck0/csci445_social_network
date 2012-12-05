@@ -40,6 +40,7 @@
 				$sQ = "SELECT DISTINCT f_as_user.User AS user0, f_as_user.Target AS target0, f_as_tgt.User as user1, f_as_tgt.Target as target1, users.* FROM users ";
 				$sQ .= "LEFT OUTER JOIN friendships f_as_user ON f_as_user.User = ".$_SESSION['user']." ";
 				$sQ .= "LEFT OUTER JOIN friendships f_as_tgt ON f_as_tgt.Target = ".$_SESSION['user']." ";
+				$sQ .= "WHERE ";
 				$num = 0;
 
 				$sanitizedQuery = sanitize($_GET['query'], $db);
@@ -49,7 +50,6 @@
 					foreach($spaceSplit as $word) {
 						if (strlen($word) >= 1) {
 							if ($num == 0) {
-								$sQ .= "WHERE ";
 								$sQ .= "users.FirstName like '%".$word."%' ";
 							} else {
 								$sQ .= "OR users.FirstName like '%".$word."%' ";
@@ -63,7 +63,6 @@
 					foreach($spaceSplit as $word) {
 						if (strlen($word) >= 1) {
 							if ($num == 0) {
-								$sQ .= "WHERE ";
 								$sQ .= "users.Email like '%".$word."%' ";
 							} else {
 								$sQ .= "OR users.Email like '%".$word."%' ";
@@ -72,6 +71,10 @@
 						}
 					}
 				}
+				if ($num > 0) {
+					$sQ .= "AND ";
+				}
+				$sQ .= "users.UID <> ".$_SESSION['user']." ";
 				# add the friendship status query
 				$result = $db->query($sQ);
 
@@ -111,16 +114,20 @@
 										?>
 										<input type="submit" value="Send friendship request" />
 										<? 
-									} elseif ($row['user0'] && $row['user1']) {
+									} elseif (($row['user0'] && $row['user1']) || $_GET['message'] == 1) {
 										# you already have a mutual friendship
-										?>
-											You are already friends!
-										<?
+											?>
+												<div>That friendship already exists and is confirmed</div>
+											<?
 									} elseif ($row['user1']) {
 										# you have already sent out a pending request
 										?>
 											Waiting for acceptance
 										<?
+									} elseif ($_GET['message'] == 4) {
+											?>
+												<div>Friend request sent</div>
+											<?
 									} else {
 										# they are awaiting a response
 										?>	
@@ -143,16 +150,17 @@
 									<input type="hidden" name="user" value="<?=$usr ?>" />
 									<input type="hidden" name="target" value="<?=$tgt ?>" />
 									<?
-										if ($_GET['message'] == 1) {
-											?>
-											<div>Friendship confirmed</div>
+										#} elseif ($_GET['message'] == 2) {
+										#	?>
+												<!--<div>You have already requested that user as a friend, and they haven't replied yet</div> -->
 											<?
-										} elseif ($_GET['message'] == 2) {
-											?>
-												<div>Request Sent</div>
+										#} elseif ($_GET['message'] == 3) {
+										#	?>
+												<!--<div>Friendship has been confirmed/denied</div>-->
 											<?
-										}
+										#}
 									?>
+
 								</td>
 							</tr>
 						</form>
