@@ -9,6 +9,11 @@
 		</div>
 		<div id="info">
 			<?php
+				/*TODO: make it so if the logged in user is the target user, they can edit their information
+						add an add friend button if the logged in user is not the target user
+						display the last 5 status updates of the target user
+				*/
+
 				$user = $_SESSION['user'];
 				$db = new mysqli('localhost', 'team10', 'tangerine', 'team10_social');
 				if (mysqli_connect_errno()) {
