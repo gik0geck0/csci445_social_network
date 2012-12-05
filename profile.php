@@ -30,7 +30,7 @@
 			        exit;
 			    }
 
-			    $info_query = "select FirstName, LastName, Email, Gender, Age from users where UID = ".$target_user;
+			    $info_query = "select FirstName, LastName, Email, Gender, Age, Location from users where UID = ".$target_user;
 			    $info = $db->query($info_query);
 			    if($info->num_rows != 0) {
 			    	$user_info = $info->fetch_assoc();
@@ -39,9 +39,11 @@
 			    	echo "<p>Gender: ".$user_info['Gender']."</p>";
 			    	echo "<p>Email: ".$user_info['Email']."</p>";
 			    	echo "<p>Age: ".$user_info['Age']."</p>";
+			    	echo "<p>Location: ".$user_info['Location']."</p>";
 			    } else {
 			    	echo "invalid user requested";
 			    }
+			    ?>
 						<form action="processFriend.php" method="POST" >
 							<tr>
 								<td>
@@ -100,7 +102,7 @@
 						</form>
 
 
-			?>
+			
 		</div>
 
 	</body>

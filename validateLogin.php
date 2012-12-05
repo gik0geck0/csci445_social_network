@@ -16,10 +16,12 @@
 
         login($user, $encrypted_pass, $db);
 
-    } elseif(isset($_GET['username'])  && isset($GET['password'])) {
+    } elseif(isset($_GET['username'])  && isset($_GET['password'])) {
     	$user = trim($_GET['username']); 
         $pass = trim($_GET['password']); 
         login($user, $pass, $db);
+    } else {
+        echo "invalid login information";
     }
         
 	function login($user, $pass, $db) {
