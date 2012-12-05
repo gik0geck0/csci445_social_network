@@ -8,6 +8,7 @@
 		<?php include("sanitize.php") ?>
 		<div id="searchBar">
 			<form action="search.php" method="get">
+				<!-- TODO: fill in the search box with the previous search -->
 				Search for <select name="searchFor">
 					<option value="user">Friend's Name</option>
 					<option value="email">Friend's Email</option>
@@ -18,73 +19,136 @@
 		</div>
 		<div id="searchResults">
 			<?php
-				if (isset($_GET['query'])) {
-					echo 'Search results: ';
+				echo 'Search results: ';
 
 
-					$db = new mysqli('localhost',
-										'team10',
-										'tangerine',
-										'team10_social');
-					$db->select_db('team10_social');
-					if ( mysqli_connect_errno() ) {
-						echo 'db connect error on connect';
-						$Success = false;
-						$Errors[] = "Error connecting to server (database).";
-					}
-					echo 'Connected to DB just fine';
-
-					$sQ = "SELECT DISTINCT * FROM users ";
-					$num = 0;
-
-					$sanitizedQuery = sanitize($_GET['query'], $db);
-					echo 'Sanitized: '.$sanitizedQuery;
-					$spaceSplit = explode(" ", $sanitizedQuery);
-
-					if ($_GET['searchFor'] == "user") {
-						foreach($spaceSplit as $word) {
-							if (strlen($word) >= 1) {
-								if ($num == 0) {
-									$sQ .= "WHERE ";
-									$sQ .= "users.FirstName like '%".$word."%' ";
-								} else {
-									$sQ .= "OR users.FirstName like '%".$word."%' ";
-								}
-								$num = $num + 1;
-								$sQ .= "OR users.LastName like '%".$word."%' ";
-								$num = $num + 1;
-							}
-						}
-					} elseif ($_GET['searchFor'] == "email") {
-						foreach($spaceSplit as $word) {
-							if (strlen($word) >= 1) {
-								if ($num == 0) {
-									$sQ .= "WHERE ";
-									$sQ .= "users.Email like '%".$word."%' ";
-								} else {
-									$sQ .= "OR users.Email like '%".$word."%' ";
-								}
-								$num = $num + 1;
-							}
-						}
-					}
-					echo "Querying: ".$sQ;
-					$result = $db->query($sQ);
-
-					if (!$result) {
-						echo "Query failed!!!<br/>";
-						echo "Error: ".$db->error;
-						exit();
-					}
-					echo "Yay, we got results!";
-					while ($row = $result->fetch_assoc()) {
-						echo "Result: ".$row['FirstName']."<br/>";
-
-					}
-					# Display the results
-
-
+				$db = new mysqli('localhost',
+									'team10',
+									'tangerine',
+									'team10_social');
+				$db->select_db('team10_social');
+				if ( mysqli_connect_errno() ) {
+					echo 'Could not connect to database. Please try again later.<br/>';
+					$Success = false;
+					$Errors[] = "Error connecting to server (database).";
+					exit();
 				}
+				if (!isset($_GET['query'])) {
+					$_GET['query'] = "";
+				}
+
+				$sQ = "SELECT DISTINCT f_as_user.User AS user0, f_as_user.Target AS target0, f_as_tgt.User as user1, f_as_tgt_Target as target1, * FROM users ";
+				$num = 0;
+
+				$sanitizedQuery = sanitize($_GET['query'], $db);
+				$spaceSplit = explode(" ", $sanitizedQuery);
+
+				if ($_GET['searchFor'] == "user") {
+					foreach($spaceSplit as $word) {
+						if (strlen($word) >= 1) {
+							if ($num == 0) {
+								$sQ .= "WHERE ";
+								$sQ .= "users.FirstName like '%".$word."%' ";
+							} else {
+								$sQ .= "OR users.FirstName like '%".$word."%' ";
+							}
+							$num = $num + 1;
+							$sQ .= "OR users.LastName like '%".$word."%' ";
+							$num = $num + 1;
+						}
+					}
+				} elseif ($_GET['searchFor'] == "email") {
+					foreach($spaceSplit as $word) {
+						if (strlen($word) >= 1) {
+							if ($num == 0) {
+								$sQ .= "WHERE ";
+								$sQ .= "users.Email like '%".$word."%' ";
+							} else {
+								$sQ .= "OR users.Email like '%".$word."%' ";
+							}
+							$num = $num + 1;
+						}
+					}
+				}
+				# add the friendship status query
+				$sQ .= "LEFT OUTER JOIN friendships f_as_user ON f_as_user.User = users.UID ";
+				$sQ .= "LEFT OUTER JOIN friendships f_as_tgt ON f_as_tgt.Target = users.UID ";
+				$result = $db->query($sQ);
+
+				if (!$result) {
+					echo "Cannot search for users right now. Please try again later.<br/>";
+					echo "Error: ".$db->error;
+					exit();
+				}
+				?>
+				<div>
+					<table>
+				<?
+				while ($row = $result->fetch_assoc()) {
+					# for each result.....
+					?>
+						<form action="processFriendship.php" method="POST" >
+							<tr>
+								<td>
+									<a href="profile.php?target=<?= $row['UID'] ?>" ><?= $row['FirstName']." ".$row['LastName']?></a>
+								</td>
+								<td>
+									Email: <?= $row['Email'] ?>
+								</td>
+								<td>
+									Gender: <?= $row['Gender'] ?>
+								</td>
+								<td>
+									Age: <?= $row['Age'] ?>
+								</td>
+								<td> <? 
+									if (!$row['user0'] && !$row['user1']) {
+										# no friendship at all.
+										?>
+										<input type="submit" value="Send friendship request" />
+										<? 
+									} elseif ($row['user0'] && $row['user1']) {
+										# you already have a mutual friendship
+										?>
+											You are already friends!
+										<?
+									} elseif ($row['user0']) {
+										# you have already sent out a pending request
+										?>
+											Waiting for acceptance
+										<?
+									} else {
+										# they are awaiting a response
+										?>	
+											Would you like to be his/her friend?
+											<table>
+												<tr>
+													<td>Accept</td>
+													<td>Decline</td>
+												</tr>
+												<tr>
+													<td><input type="radio" name="acceptDeny" value="2"></td>
+													<td><input type="radio" name="acceptDeny" value="0"></td>
+													<td><input type="submit" value="Send Response"></td>
+												</tr>
+											</table>
+										<?
+									}
+
+									if ($usr && $tgt) {
+										?>
+										<input type="hidden" name="user" value="<?=$row['user0'] ?>" />
+										<input type="hidden" name="target" value="<?=$row['tgt0'] ?>" />
+									<? } ?>
+								</td>
+							</tr>
+						</form>
+					<?
+				}
+				?>
+					</table>
+				</div>
+				<?
 			?>
 		</div>
 	</body>
