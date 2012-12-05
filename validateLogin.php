@@ -16,7 +16,7 @@
 
         login($user, $encrypted_pass, $db);
 
-    } else if(isset($_GET['username'])  && isset($GET['password'])) {
+    } elseif(isset($_GET['username'])  && isset($GET['password'])) {
     	$user = trim($_GET['username']); 
         $pass = trim($_GET['password']); 
         login($user, $pass, $db);
