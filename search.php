@@ -102,8 +102,12 @@
 									Age: <?= $row['Age'] ?>
 								</td>
 								<td> <? 
+									$usr = $_SESSION[''];
+									$tgt = $row['UID'];
 									if (!$row['user0'] && !$row['user1']) {
 										# no friendship at all.
+										$usr = $_SESSION[''];
+										$tgt = $row['UID'];
 										?>
 										<input type="submit" value="Send friendship request" />
 										<? 
@@ -127,8 +131,8 @@
 													<td>Decline</td>
 												</tr>
 												<tr>
-													<td><input type="radio" name="acceptDeny" value="2"></td>
-													<td><input type="radio" name="acceptDeny" value="0"></td>
+													<td><input type="radio" name="action" value="2"></td>
+													<td><input type="radio" name="action" value="0"></td>
 													<td><input type="submit" value="Send Response"></td>
 												</tr>
 											</table>
@@ -136,8 +140,8 @@
 									}
 
 									?>
-									<input type="hidden" name="user" value="<?=$row['user0'] ?>" />
-									<input type="hidden" name="target" value="<?=$row['target0'] ?>" />
+									<input type="hidden" name="user" value="<?=$usr ?>" />
+									<input type="hidden" name="target" value="<?=$tgt ?>" />
 								</td>
 							</tr>
 						</form>
