@@ -135,11 +135,9 @@
 										<?
 									}
 
-									if ($usr && $tgt) {
-										?>
-										<input type="hidden" name="user" value="<?=$row['user0'] ?>" />
-										<input type="hidden" name="target" value="<?=$row['tgt0'] ?>" />
-									<? } ?>
+									?>
+									<input type="hidden" name="user" value="<?=$row['user0'] ?>" />
+									<input type="hidden" name="target" value="<?=$row['target0'] ?>" />
 								</td>
 							</tr>
 						</form>

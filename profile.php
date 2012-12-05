@@ -42,6 +42,62 @@
 			    } else {
 			    	echo "invalid user requested";
 			    }
+						<form action="processFriend.php" method="POST" >
+							<tr>
+								<td>
+									<a href="profile.php?target=<?= $row['UID'] ?>" ><?= $row['FirstName']." ".$row['LastName']?></a>
+								</td>
+								<td>
+									Email: <?= $row['Email'] ?>
+								</td>
+								<td>
+									Gender: <?= $row['Gender'] ?>
+								</td>
+								<td>
+									Age: <?= $row['Age'] ?>
+								</td>
+								<td> <? 
+									if (!$row['user0'] && !$row['user1']) {
+										# no friendship at all.
+										?>
+										<input type="submit" value="Send friendship request" />
+										<? 
+									} elseif ($row['user0'] && $row['user1']) {
+										# you already have a mutual friendship
+										?>
+											You are already friends!
+										<?
+									} elseif ($row['user0']) {
+										# you have already sent out a pending request
+										?>
+											Waiting for acceptance
+										<?
+									} else {
+										# they are awaiting a response
+										?>	
+											Would you like to be his/her friend?
+											<table>
+												<tr>
+													<td>Accept</td>
+													<td>Decline</td>
+												</tr>
+												<tr>
+													<td><input type="radio" name="acceptDeny" value="2"></td>
+													<td><input type="radio" name="acceptDeny" value="0"></td>
+													<td><input type="submit" value="Send Response"></td>
+												</tr>
+											</table>
+										<?
+									}
+
+									if ($usr && $tgt) {
+										?>
+										<input type="hidden" name="user" value="<?=$row['user0'] ?>" />
+										<input type="hidden" name="target" value="<?=$row['tgt0'] ?>" />
+									<? } ?>
+								</td>
+							</tr>
+						</form>
 
 
 			?>
