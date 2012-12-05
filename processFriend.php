@@ -17,6 +17,11 @@
         echo 'error: target user to friend not found';
         exit;
     }
+    if(isset($_POST['action'])) {
+        $action = $_POST['action'];
+    } else {
+        $action = -1;
+    }
 
     $validate_query = "select UID from users where UID = $target_user";
         $friend = $db->query($validate_query);
@@ -38,21 +43,26 @@
             }
 
             //check if they have requested you
+            //the POST key 'action' will deterine whether it is a friendship confirmation or denyal
             $check_pending_query = "select FID from friendships where target = ".$user." and Status = 1";
             $pending = $db->query($check_pending_query);
             if($pending->num_rows != 0) {
-                //elevate that row to two and insert a new row of the reciprocal
-                $elevate_query = "update friendships set Status = 2 where user = ".$target." and target = ".$user;
-                $elevate = $db->query($elevate_query);
-                $create_confirmed_query = "insert into friendships values (null, ".$user.", ".$target_user.", 2)";
-                $create_confirmed = $db->query($create_confirmed_query);
+                if($action != -1) {
+                    //elevate that row to two and insert a new row of the reciprocal
+                    $elevate_query = "update friendships set Status = ".$action." where user = ".$target." and target = ".$user;
+                    $elevate = $db->query($elevate_query);
+                    $create_confirmed_query = "insert into friendships values (null, ".$user.", ".$target_user.", ".$action.")";
+                    $create_confirmed = $db->query($create_confirmed_query);
+                } else {
+                    echo "friendship already exists but action was unset. action must be 0-deny or 2-confirm";
+                }
             }
 
             $friend_query = "insert into friendships values (null, ".$user.", ".$target_user.", 1)";
             $create_frienship = $db->query($friend_query);
 
         } else { 
-            echo "error: could not find target user with UID: $target_user"
+            echo "error: could not find target user with UID: $target_user";
         } 
 
 ?> 
