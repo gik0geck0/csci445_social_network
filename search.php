@@ -41,14 +41,14 @@
 
 					if ($_GET['searchFor'] == "user") {
 						foreach($spaceSplit as $word) {
-							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% "
-							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% "
+							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% ";
+							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% ";
 							$num = $num + 1;
 						}
-					} elseif () {
+					} else {
 						foreach($spaceSplit as $word) {
-							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% "
-							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% "
+							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% ";
+							$sQ .= "LEFT OUTER JOIN users users".$num." ON users".$num.".first ilike %".$spaceSplit."% ";
 							$num = $num + 1;
 						}
 					}

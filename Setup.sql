@@ -41,6 +41,7 @@ CREATE TABLE friendships(
     FID int NOT NULL AUTO_INCREMENT,
     User int NOT NULL,
     Target int NOT NULL,
+    Status int NOT NULL,
     PRIMARY KEY (FID),
     FOREIGN KEY (user) REFERENCES users(UID),
     FOREIGN KEY (target) REFERENCES users(UID)
