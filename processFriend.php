@@ -30,7 +30,8 @@
         $check_confirmed_query = "select FID from friendships where user = ".$user." and target = ".$target_user." and Status = 2";
         $confirmed = $db->query($check_confirmed_query);
         if($confirmed->num_rows != 0) {
-            header("Location: search.php?messag=1");
+            header("Location: friends.php");
+            //header("Location: search.php?messag=1");
             //echo "that friendship already exists and is confirmed";
             //exit;
         }
@@ -39,7 +40,8 @@
         $check_unconfirmed_query = "select FID from friendships where user = ".$user." and target = ".$target_user." and Status = 1";
         $unconfirmed = $db->query($check_unconfirmed_query);
         if($unconfirmed->num_rows != 0) {
-            header("Location: search.php?messag=2");
+            header("Location: friends.php");
+            //header("Location: search.php?messag=2");
             //echo "you have already requested that user as a friend, and they haven't replied yet";
             //exit;
         }
@@ -55,14 +57,16 @@
                 $elevate = $db->query($elevate_query);
                 $create_confirmed_query = "insert into friendships values (null, ".$user.", ".$target_user.", ".$action.")";
                 $create_confirmed = $db->query($create_confirmed_query);
-                header("Location: search.php?messag=3");
+                header("Location: friends.php");
+                //header("Location: search.php?messag=3");
             } else {
                 echo "friendship already exists but action was unset. action must be 0-deny or 2-confirm";
             }
         } else {
             $friend_query = "insert into friendships values (null, ".$user.", ".$target_user.", 1)";
             $create_frienship = $db->query($friend_query);
-            header("Location: search.php?message=4");
+            header("Location: friends.php");
+            //header("Location: search.php?message=4");
         }
 
     } else { 
