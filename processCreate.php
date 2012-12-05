@@ -1,13 +1,5 @@
 <?php
-    $fname = $_POST['firstName'];
-    $lname = $_POST['lastName'];
-    $email = $_POST['email'];
-    $pass  = $_POST['password']; // HASH THIS
-    $vpass = $_POST['veriPassword']; // AND THIS?
-    $avatar= $_POST['avatar']; // Careful with this one
-    $gender= $_POST['gender']; // Verify this
-    $age   = $_POST['age'];
-    $loc   = $_POST['location'];
+	include("sanitize.php");
     
     $Success = true;
     $Errors = array();
@@ -24,6 +16,16 @@
                        'tangerine', 
                        'team10_social');
 	$db->select_db('team10_social');
+
+    $fname = sanitize($_POST['firstName'], $db);
+    $lname = sanitize($_POST['lastName'], $db);
+    $email = sanitize($_POST['email'], $db);
+    $pass  = sanitize($_POST['password'], $db); // HASH THIS
+    $vpass = sanitize($_POST['veriPassword'], $db); // AND THIS?
+    $avatar= sanitize($_POST['avatar'], $db); // Careful with this one
+    $gender= sanitize($_POST['gender'], $db); // Verify this
+    $age   = sanitize($_POST['age'], $db);
+    $loc   = sanitize($_POST['location'], $db);
                        
     // TODO: Make this more robustly visible to the user
 	if ( mysqli_connect_errno( ) )  {
