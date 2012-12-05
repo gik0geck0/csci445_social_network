@@ -61,15 +61,17 @@
 	//TODO: Process and store image, get an imageID from DB
 	
 	if ($Success){
-	    $prepQuery = $db->prepare("INSERT INTO users VALUES (0, ?, ?, ?, ?, 0, ?, ?)");
-	    $SHApass = SHA1($pass);
-	    $prepQuery->bind_param('sssssi', $fname, $lname, $email, $SHApass, $gender, $age);
+	    $prepQuery = $db->prepare("INSERT INTO users VALUES (null, ?, ?, ?, ?, 0, ?, ?, ?)");
+	    $SHApass = sha1($pass);
+	    $prepQuery->bind_param('sssssis', $fname, $lname, $email, $SHApass, $gender, $age, $loc);
+	    /*
 	    var_dump($fname);
 	    var_dump($lname);
 	    var_dump($email);
 	    var_dump($SHApass);
 	    var_dump($gender);
 	    var_dump($age);
+	    */
 	    $prepQuery->execute();
 	    if ( $db->connect_errno )  {
 			echo 'db connect error when executing';
@@ -77,11 +79,11 @@
 		    $prepQuery->close();
 	    }
 	    else {
-			echo 'done executing query';
+			//echo 'done executing query';
 		    $prepQuery->close();
 	        // Redirect to index page
 	        // This is bad, since the hash is theoretically visible
-	        header("Location: index.php");
+	        header("Location: validateLogin.php?username=$email&password=$SHApass");
 	    }
 	 }
 	 else{

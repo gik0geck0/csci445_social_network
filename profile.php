@@ -13,7 +13,7 @@
 						add an add friend button if the logged in user is not the target user
 						display the last 5 status updates of the target user
 				*/
-
+				exit();
 				$user = $_SESSION['user'];
 				$db = new mysqli('localhost', 'team10', 'tangerine', 'team10_social');
 				if (mysqli_connect_errno()) {
@@ -21,7 +21,9 @@
 					exit;
 				}
 				
-				/* TODO : make this button
+				exit();
+				
+				// TODO: Make this button
 			    if(isset($_POST['target'])) {
 			        $target_user = $_POST['target'];
 			    } elseif(isset($_GET['target'])) {
@@ -31,7 +33,7 @@
 			        exit;
 			    }
 
-			    $info_query = "select FirstName, LastName, Email, Gender, Age from users where UID = ".$target_user;
+			    $info_query = "select FirstName, LastName, Email, Gender, Age, Location from users where UID = ".$target_user;
 			    $info = $db->query($info_query);
 			    if($info->num_rows != 0) {
 			    	$user_info = $info->fetch_assoc();
@@ -40,9 +42,11 @@
 			    	echo "<p>Gender: ".$user_info['Gender']."</p>";
 			    	echo "<p>Email: ".$user_info['Email']."</p>";
 			    	echo "<p>Age: ".$user_info['Age']."</p>";
+			    	echo "<p>Location: ".$user_info['Location']."</p>";
 			    } else {
 			    	echo "invalid user requested";
 			    }
+			    ?>
 						<form action="processFriend.php" method="POST" >
 							<tr>
 								<td>
@@ -99,11 +103,6 @@
 								</td>
 							</tr>
 						</form>
-
-
-			?>
-			*/
 		</div>
-
 	</body>
 </html>
