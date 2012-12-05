@@ -142,6 +142,17 @@
 									?>
 									<input type="hidden" name="user" value="<?=$usr ?>" />
 									<input type="hidden" name="target" value="<?=$tgt ?>" />
+									<?
+										if ($_GET['message'] == 1) {
+											?>
+											<div>Friendship confirmed</div>
+											<?
+										} elseif ($_GET['message'] == 2) {
+											?>
+												<div>Request Sent</div>
+											<?
+										}
+									?>
 								</td>
 							</tr>
 						</form>
