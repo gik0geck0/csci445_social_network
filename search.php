@@ -87,7 +87,7 @@
 				while ($row = $result->fetch_assoc()) {
 					# for each result.....
 					?>
-						<form action="processFriendship.php" method="POST" >
+						<form action="processFriend.php" method="POST" >
 							<tr>
 								<td>
 									<a href="profile.php?target=<?= $row['UID'] ?>" ><?= $row['FirstName']." ".$row['LastName']?></a>
