@@ -106,7 +106,7 @@
 									$tgt = $row['UID'];
 									if (!$row['user0'] && !$row['user1']) {
 										# no friendship at all.
-										$usr = $_SESSION[''];
+										$usr = $_SESSION['user'];
 										$tgt = $row['UID'];
 										?>
 										<input type="submit" value="Send friendship request" />
