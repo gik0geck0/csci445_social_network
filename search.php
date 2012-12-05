@@ -35,11 +35,10 @@
 				}
 				if (!isset($_GET['query'])) {
 					$_GET['query'] = "";
+					$_GET['searchFor'] = "Nothing";
 				}
 
-				$sQ = "SELECT DISTINCT f_as_user.User AS user0, f_as_user.Target AS target0, f_as_tgt.User as user1, f_as_tgt.Target as target1, users.* FROM users ";
-				$sQ .= "LEFT OUTER JOIN friendships f_as_user ON f_as_user.User = ".$_SESSION['user']." ";
-				$sQ .= "LEFT OUTER JOIN friendships f_as_tgt ON f_as_tgt.Target = ".$_SESSION['user']." ";
+				$sQ = "SELECT DISTINCT * FROM users ";
 				$sQ .= "WHERE ";
 				$num = 0;
 
@@ -86,91 +85,32 @@
 				?>
 				<div>
 					<table>
-				<?
-				while ($row = $result->fetch_assoc()) {
-					# for each result.....
-					?>
-						<form action="processFriend.php" method="POST" >
-							<tr>
-								<td>
-									<a href="profile.php?target=<?= $row['UID'] ?>" ><?= $row['FirstName']." ".$row['LastName']?></a>
-								</td>
-								<td>
-									Email: <?= $row['Email'] ?>
-								</td>
-								<td>
-									Gender: <?= $row['Gender'] ?>
-								</td>
-								<td>
-									Age: <?= $row['Age'] ?>
-								</td>
-								<td> <? 
-									$usr = $_SESSION[''];
-									$tgt = $row['UID'];
-									if (!$row['user0'] && !$row['user1']) {
-										# no friendship at all.
-										$usr = $_SESSION['user'];
-										$tgt = $row['UID'];
-										?>
-										<input type="submit" value="Send friendship request" />
-										<? 
-									} elseif (($row['user0'] && $row['user1']) || $_GET['message'] == 1) {
-										# you already have a mutual friendship
-											?>
-												<div>That friendship already exists and is confirmed</div>
-											<?
-									} elseif ($row['user1']) {
-										# you have already sent out a pending request
-										?>
-											Waiting for acceptance
-										<?
-									} elseif ($_GET['message'] == 4) {
-											?>
-												<div>Friend request sent</div>
-											<?
-									} else {
-										# they are awaiting a response
-										?>	
-											Would you like to be his/her friend?
-											<table>
-												<tr>
-													<td>Accept</td>
-													<td>Decline</td>
-												</tr>
-												<tr>
-													<td><input type="radio" name="action" value="2"></td>
-													<td><input type="radio" name="action" value="0"></td>
-													<td><input type="submit" value="Send Response"></td>
-												</tr>
-											</table>
-										<?
-									}
-
-									?>
-									<input type="hidden" name="user" value="<?=$usr ?>" />
-									<input type="hidden" name="target" value="<?=$tgt ?>" />
-									<?
-										#} elseif ($_GET['message'] == 2) {
-										#	?>
-												<!--<div>You have already requested that user as a friend, and they haven't replied yet</div> -->
-											<?
-										#} elseif ($_GET['message'] == 3) {
-										#	?>
-												<!--<div>Friendship has been confirmed/denied</div>-->
-											<?
-										#}
-									?>
-
-								</td>
-							</tr>
-						</form>
-					<?
-				}
-				?>
+						<?
+						while ($row = $result->fetch_assoc()) {
+							?>
+								<form action="processFriend.php" method="POST" >
+									<tr>
+										<td>
+											<a href="profile.php?target=<?= $row['UID'] ?>" ><?= $row['FirstName']." ".$row['LastName']?></a>
+										</td>
+										<td>
+											Email: <?= $row['Email'] ?>
+										</td>
+										<td>
+											Gender: <?= $row['Gender'] ?>
+										</td>
+										<td>
+											Age: <?= $row['Age'] ?>
+										</td>
+										<td>
+										</td>
+									</tr>
+								</form>
+							<?
+						}
+						?>
 					</table>
 				</div>
-				<?
-			?>
 		</div>
 	</body>
 </html>
