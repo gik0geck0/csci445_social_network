@@ -34,13 +34,13 @@
 		        $Errors[] = "Error connecting to server (database).";
 	        }
 	        
-	       $prepQuery = $db->prepare("SELECT users.FirstName, users.LastName, users.ImageID, users.Gender "
+	       $prepQuery = $db->prepare("SELECT users.UID, users.FirstName, users.LastName, users.ImageID, users.Gender "
 	                                ."FROM users JOIN friendships "
 	                                ."WHERE friendships.user=? "
 	                                ."AND users.UID=friendships.target "
 	                                ."AND friendships.Status=2");
            $prepQuery->bind_param("i", $_SESSION['user']);
-           $prepQuery->bind_result($FirstName, $LastName, $ImageID, $Gender);
+           $prepQuery->bind_result($UID, $FirstName, $LastName, $ImageID, $Gender);
            $prepQuery->execute();
 	    ?>	    
 	    <h4>People You Are Friends With</h4>
@@ -48,7 +48,7 @@
 		    <?php
 		        while($prepQuery->fetch()){?>
 		            <div id="friend<?=$FirstName?>" class="friend">
-		                <p><?=$FirstName?> <?=$LastName?></p>
+						<a href="profile.php?target=<?= $UID ?>" ><?=$FirstName.' '.$LastName?></a>
 		                <p>Avatar: <?=$ImageID?></p>
 		                <p><?=$Gender?></p>
 	                </div>
