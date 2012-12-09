@@ -23,6 +23,7 @@ CREATE TABLE users(
     ImageID int NOT NULL,
     Gender varchar(255),
     Age int,
+    Location varchar(255),
     PRIMARY KEY (UID),
     FOREIGN KEY (ImageID) REFERENCES images(IID),
     UNIQUE(Email)

@@ -1,13 +1,5 @@
 <?php
-    $fname = $_POST['firstName'];
-    $lname = $_POST['lastName'];
-    $email = $_POST['email'];
-    $pass  = $_POST['password']; // HASH THIS
-    $vpass = $_POST['veriPassword']; // AND THIS?
-    $avatar= $_POST['avatar']; // Careful with this one
-    $gender= $_POST['gender']; // Verify this
-    $age   = $_POST['age'];
-    $loc   = $_POST['location'];
+	include("sanitize.php");
     
     $Success = true;
     $Errors = array();
@@ -24,6 +16,16 @@
                        'tangerine', 
                        'team10_social');
 	$db->select_db('team10_social');
+
+    $fname = sanitize($_POST['firstName'], $db);
+    $lname = sanitize($_POST['lastName'], $db);
+    $email = sanitize($_POST['email'], $db);
+    $pass  = sanitize($_POST['password'], $db); // HASH THIS
+    $vpass = sanitize($_POST['veriPassword'], $db); // AND THIS?
+    $avatar= sanitize($_POST['avatar'], $db); // Careful with this one
+    $gender= sanitize($_POST['gender'], $db); // Verify this
+    $age   = sanitize($_POST['age'], $db);
+    $loc   = sanitize($_POST['location'], $db);
                        
     // TODO: Make this more robustly visible to the user
 	if ( mysqli_connect_errno( ) )  {
@@ -61,9 +63,9 @@
 	//TODO: Process and store image, get an imageID from DB
 	
 	if ($Success){
-	    $prepQuery = $db->prepare("INSERT INTO users VALUES (0, ?, ?, ?, ?, 0, ?, ?)");
-	    $SHApass = SHA1($pass);
-	    $prepQuery->bind_param('sssssi', $fname, $lname, $email, $SHApass, $gender, $age);
+	    $prepQuery = $db->prepare("INSERT INTO users VALUES (null, ?, ?, ?, ?, 0, ?, ?, ?)");
+	    $SHApass = sha1($pass);
+	    $prepQuery->bind_param('sssssis', $fname, $lname, $email, $SHApass, $gender, $age, $loc);
 	    $prepQuery->execute();
 	    if ( $db->connect_errno )  {
 			echo 'db connect error when executing';
@@ -71,11 +73,11 @@
 		    $prepQuery->close();
 	    }
 	    else {
-			echo 'done executing query';
+			//echo 'done executing query';
 		    $prepQuery->close();
 	        // Redirect to index page
 	        // This is bad, since the hash is theoretically visible
-	        header("Location: index.php");
+	        header("Location: validateLogin.php?username=$email&password=$SHApass");
 	    }
 	 }
 	 else{
