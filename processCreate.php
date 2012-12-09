@@ -66,14 +66,6 @@
 	    $prepQuery = $db->prepare("INSERT INTO users VALUES (null, ?, ?, ?, ?, 0, ?, ?, ?)");
 	    $SHApass = sha1($pass);
 	    $prepQuery->bind_param('sssssis', $fname, $lname, $email, $SHApass, $gender, $age, $loc);
-	    /*
-	    var_dump($fname);
-	    var_dump($lname);
-	    var_dump($email);
-	    var_dump($SHApass);
-	    var_dump($gender);
-	    var_dump($age);
-	    */
 	    $prepQuery->execute();
 	    if ( $db->connect_errno )  {
 			echo 'db connect error when executing';
