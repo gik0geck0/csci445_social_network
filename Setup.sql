@@ -34,8 +34,11 @@ CREATE TABLE statuses(
     UID int NOT NULL,
     Content varchar(150) NOT NULL,
     Privacy int NOT NULL,
+    Parent int,
+    Post_time DATETIME NOT NULL,
     PRIMARY KEY (SID),
-    FOREIGN KEY (UID) REFERENCES users(UID)
+    FOREIGN KEY (UID) REFERENCES users(UID),
+    FOREIGN KEY (Parent) REFERENCES statuses(SID)
     );
     
 CREATE TABLE friendships(
