@@ -24,7 +24,7 @@
 		exit;
 	}
 
-	$info_query = "select FirstName, LastName, Email, Gender, Age, Location from users where UID = ".$target_user;
+	$info_query = "select FirstName, LastName, Email, Gender, Age, Location, ImageID from users where UID = ".$target_user;
 	$info = $db->query($info_query);
 	if($info->num_rows != 0) {
 		$user_info = $info->fetch_assoc();
@@ -34,6 +34,7 @@
 		echo "<p>Email: ".$user_info['Email']."</p>";
 		echo "<p>Age: ".$user_info['Age']."</p>";
 		echo "<p>Location: ".$user_info['Location']."</p>";
+		echo '<p><img src="image_file.php?image_id='.$user_info['ImageID'].'"></p>';
 	} else {
 		echo "invalid user requested";
 	}

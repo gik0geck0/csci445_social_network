@@ -62,27 +62,28 @@
 	//TODO: Verify email
 	
 	//TODO: Process and store image, get an imageID from DB
-	$maxsize = $_POST['MAX_FILE_SIZE'];
+
 	if(!isset($_FILES['avatar'])) {
+		$Success = false;
         $Errors[] = "Please select a file";
-    }
-    else
+    } else
         {
         try {
-            upload('avatar');
+            $image_ID = upload('avatar');
+            //echo "the image id is: $image_ID";
             // give praise and thanks to the php gods
-            //echo '<p>Thank you for submitting</p>';
         }
         catch(Exception $e) {
+        	$Success = false;
             $Errors[] = $e->getMessage();
             $Errors[] = 'Sorry, could not upload file';
         }
     }
 	
 	if ($Success){
-	    $prepQuery = $db->prepare("INSERT INTO users VALUES (null, ?, ?, ?, ?, 0, ?, ?, ?)");
+	    $prepQuery = $db->prepare("INSERT INTO users VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)");
 	    $SHApass = sha1($pass);
-	    $prepQuery->bind_param('sssssis', $fname, $lname, $email, $SHApass, $gender, $age, $loc);
+	    $prepQuery->bind_param('ssssisis', $fname, $lname, $email, $SHApass, $image_ID, $gender, $age, $loc);
 	    $prepQuery->execute();
 	    if ( $db->connect_errno )  {
 			echo 'db connect error when executing';
