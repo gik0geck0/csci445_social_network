@@ -59,9 +59,7 @@
 			}
 		}
 		?>
-	   <form action="processFriend.php" method="POST" >
-		   <tr>
-				<td> <?
+	   <form action="processFriend.php" method="POST" ><?
 					if ($targetOnUser == 1) {
 						# they are awaiting a response
 						?>
@@ -98,11 +96,97 @@
 					?>
 					<input type="hidden" name="user" value="<?=$user ?>" />
 					<input type="hidden" name="target" value="<?=$target_user ?>" />
-				</td>
-			</tr>
 		</form>
 	<?
 	}	// end if user <> target_user
+	else {
+	?>
+		<form action="processUpdate.php" method="POST">
+			<table>
+				<tr>
+					<td>
+						First Name: 
+					</td>
+					<td>
+						<input type="text" name="firstName">
+					</td>
+					<td>
+						<div id="firstNameError"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Last Name:
+					</td>
+					<td>
+						<input type="text" name="lastName">
+					</td>
+					<td>
+						<div id="lastNameError"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Email:
+					</td>
+					<td>
+						<input type="text" name="email">
+					</td>
+					<td>
+						<div id="emailError"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Avatar:
+					</td>
+					<td>
+						<input type="file" name="avatar">
+					</td>
+					<td>
+						<div id="avatarError"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Gender:
+					</td>
+					<td>
+						Male: <input type="radio" name="gender" value="Male" checked = "true"> 
+						Female: <input type="radio" name="gender" value="Female">
+						Other: <input type="radio" name="gender" value="Other">
+					</td>
+					<td>
+						<div id="genderError"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Age:
+					</td>
+					<td>
+						<input type="text" name="age" width="3">
+					</td>
+					<td>
+						<div id="ageError"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Location:
+					</td>
+					<td>
+						<input type="text" name="location">
+					</td>
+					<td>
+						<div id="locationError"></div>
+					</td>
+				</tr>
+			</table>
+			<button type="submit">Update Profile</button>
+		</form>
+	<?
+	} // end else
 	?>
 </div>
 <?php include("footer.php"); ?>
