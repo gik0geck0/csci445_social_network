@@ -7,7 +7,7 @@
 		<div>
 			<h1>Create a New Profile</h1>
 		</div>
-		<form name="createUser" action="processCreate.php" method="post">
+		<form enctype="multipart/form-data" name="createUser" action="processCreate.php" method="post">
 			<table>
 				<tr>
 					<td>
@@ -70,6 +70,7 @@
 					</td>
 					<td>
 						<input type="file" name="avatar">
+						<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
 					</td>
 					<td>
 						<div id="avatarError"></div>

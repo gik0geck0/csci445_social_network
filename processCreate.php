@@ -1,5 +1,6 @@
 <?php
 	include("sanitize.php");
+	include("upload.php");
     
     $Success = true;
     $Errors = array();          
@@ -31,7 +32,7 @@
 	if ( mysqli_connect_errno( ) )  {
 		echo 'db connect error on connect';
 		$Success = false;
-		$Errors[] = "Error connecting to server (databse).";
+		$Errors[] = "Errors connecting to server (databse).";
 	}
 	
 	// See if email is already in use
@@ -42,25 +43,41 @@
 	$preparedQuery->fetch();
 	if ($UID_result){
 	    $Success = false;
-	    $Error[] = "E-Mail already in use.";
+	    $Errors[] = "E-Mail already in use.";
 	}
 	$preparedQuery->close();
 	
 	// Verify gender
 	if (!in_array($gender, array("Male", "Female", "Other"))){
 	    $Success = false;
-	    $Error[] = "Invalid gender specified.";
+	    $Errors[] = "Invalid gender specified.";
 	}
 	
 	// Verify age is numeric
 	if (!is_numeric($age) || (age < -2147483648) || (age > 2147483647)){
 	    $Success = false;
-	    $Error[] = "Invalid age specified.";
+	    $Errors[] = "Invalid age specified.";
 	}
 	
 	//TODO: Verify email
 	
 	//TODO: Process and store image, get an imageID from DB
+	$maxsize = $_POST['MAX_FILE_SIZE'];
+	if(!isset($_FILES['avatar'])) {
+        $Errors[] = "Please select a file";
+    }
+    else
+        {
+        try {
+            upload('avatar');
+            // give praise and thanks to the php gods
+            //echo '<p>Thank you for submitting</p>';
+        }
+        catch(Exception $e) {
+            $Errors[] = $e->getMessage();
+            $Errors[] = 'Sorry, could not upload file';
+        }
+    }
 	
 	if ($Success){
 	    $prepQuery = $db->prepare("INSERT INTO users VALUES (null, ?, ?, ?, ?, 0, ?, ?, ?)");
@@ -81,7 +98,7 @@
 	    }
 	 }
 	 else{
-	    echo "Errors:";
-	    print_r($Error);
+	    echo "Error:";
+	    print_r($Errors);
 	 }
 ?>
