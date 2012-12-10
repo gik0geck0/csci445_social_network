@@ -14,11 +14,17 @@
 	border-color: black;
 }
 
+#statuses{
+	float: left;
+	margin: 1em;
+}
+
 #menu{
 	float: left;
 	margin: 1em;
 }
 
-#contentContainer{
+#profileContainer{
 	float: left;
+	margin: 1em;
 }

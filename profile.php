@@ -1,7 +1,5 @@
 <?php include("headerLoggedin.php"); ?>
-<div id="contentContainer">
-<div id="statuses">
-</div>
+<div id="profileContainer">
 <div id="info">
 	<?php
 	/*TODO: make it so if the logged in user is the target user, they can edit their information
@@ -193,6 +191,7 @@
 	?>
 </div>
 </div>
+<div id="statuses">
 <?
 	# list all the 5 most recent status updates by this user
 	$db = new mysqli('localhost',
@@ -283,6 +282,7 @@
 	}
 
 ?>
+</div>
 <script src="profile.js" type="text/javascript"></script>
 <script src="validate.js" type="text/javascript"></script>
 <?php include("footer.php"); ?>
