@@ -85,6 +85,9 @@
 					<form action="processFriend.php" method="POST" >
 						<tr>
 							<td>
+								<img width="20" height="20" src="image_file.php?image_id=<?= $row['ImageID'] ?>">
+							</td>
+							<td>
 								<a href="profile.php?target=<?= $row['UID'] ?>" ><?= $row['FirstName']." ".$row['LastName']?></a>
 							</td>
 							<td>

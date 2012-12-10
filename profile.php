@@ -184,7 +184,7 @@
 					</td>
 				</tr>
 			</table>
-			<input type="button" value="Create Profile" id="submitButton" />
+			<input type="button" value="Update Profile" id="submitButton" />
 		</form>
 	<?
 	} // end else
