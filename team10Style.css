@@ -8,10 +8,29 @@
 
 .menulink{
 	margin-top: 1em;
-	padding: 0.1em;
-	border: 5px;
+	border: 4px;
 	border-style: double;
 	border-color: black;
+}
+
+.status{
+	margin: 1em;
+	padding: 1em;
+	border: 1px;
+	border-style: solid;
+	border-color: gray;
+}
+
+.comment{
+	border-left: 2px;
+	border-left-style: solid;
+	border-left-color: gray;
+	padding-left: 0.5em;
+}
+
+.faded{
+	font-size: x-small;
+	color: #BBBBBB;
 }
 
 #statuses{

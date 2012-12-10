@@ -17,6 +17,7 @@
 	} ?>
 </form>
 
+<div id="statuses">
 <?
 	# list all the 20 most recent status updates by the current user, or friends
 	$db = new mysqli('localhost',
@@ -68,8 +69,8 @@
 	while ($row = $statuses->fetch_assoc()) {
 		?>
 		<div class="status">
-			<?= $row['FirstName']." ".$row['LastName'] ?>:<br/>
-			<?= $row['Content'] ?><br/>
+			<p id="name"><?= $row['FirstName']." ".$row['LastName'] ?>:</p>
+			<p id="content"><?= $row['Content'] ?></p>
 			<div class="faded">
 				<?= $row['Post_time'] ?>
 			</div>
@@ -84,8 +85,8 @@
 			while ($comment = $comments->fetch_assoc()) {
 				?>
 				<div class="comment">
-					<?= $comment['FirstName']." ".$comment['LastName'] ?>:<br/>
-					<?= $comment['Content'] ?><br/>
+					<p id="name"><?= $comment['FirstName']." ".$comment['LastName'] ?>:</p>
+					<p id="content"><?= $comment['Content'] ?></p>
 					<div class="faded">
 						<?= $comment['Post_time'] ?>
 					</div>
@@ -107,4 +108,5 @@
 	}
 
 ?>
+</div>
 <?php include("footer.php"); ?>
