@@ -121,33 +121,38 @@
 								}
 								?>
 							   <form action="processFriend.php" method="POST" >
-								   <tr>
 										<td> <?
 											if ($targetOnUser == 1) {
 												# they are awaiting a response
 												?>
 												Would you like to be his/her friend?
+												<td>
 												<table>
 													<tr>
 														<td>Accept</td>
 														<td>Decline</td>
 													</tr>
 													<tr>
-														<td><input type="radio" name="acceptDeny" value="2"></td>
-														<td><input type="radio" name="acceptDeny" value="0"></td>
+														<td><input type="radio" name="action" value="2"></td>
+														<td><input type="radio" name="action" value="0"></td>
 														<td><input type="submit" value="Send Response"></td>
 													</tr>
 												</table>
+												</td>
 												<?
 											} elseif ($userOnTarget == 2 and $targetOnUser == 2) {
 												# you already have a mutual friendship
 												?>
 												You are already friends!
+												<input type="submit" value="Destroy Friendship" />
+												<input type="hidden" name="action" value="0" />
 												<?
 											} elseif ($userOnTarget == 1) {
 												# you have already sent out a pending request
 												?>
 												Waiting for acceptance
+												<input type="submit" value="Cancel Request" />
+												<input type="hidden" name="action" value="0" />
 												<?
 											} elseif ($userOnTarget <= 0 and $targetOnUser <= 0) {
 												# no friendship at all.
@@ -160,7 +165,6 @@
 											<input type="hidden" name="user" value="<?=$user ?>" />
 											<input type="hidden" name="target" value="<?=$target_user ?>" />
 										</td>
-									</tr>
 								</form>
 							</td>
 						</tr>
