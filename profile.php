@@ -1,4 +1,5 @@
 <?php include("headerLoggedin.php"); ?>
+<div id="contentContainer">
 <div id="statuses">
 </div>
 <div id="info">
@@ -28,13 +29,13 @@
 	$info = $db->query($info_query);
 	if($info->num_rows != 0) {
 		$user_info = $info->fetch_assoc();
+		echo '<p><img src="image_file.php?image_id='.$user_info['ImageID'].'"></p>';
 		echo "<p>First Name: ".$user_info['FirstName']."</p>";
 		echo "<p>Last Name: ".$user_info['LastName']."</p>";
 		echo "<p>Gender: ".$user_info['Gender']."</p>";
 		echo "<p>Email: ".$user_info['Email']."</p>";
 		echo "<p>Age: ".$user_info['Age']."</p>";
 		echo "<p>Location: ".$user_info['Location']."</p>";
-		echo '<p><img src="image_file.php?image_id='.$user_info['ImageID'].'"></p>';
 	} else {
 		echo "invalid user requested";
 	}
@@ -190,5 +191,6 @@
 	<?
 	} // end else
 	?>
+</div>
 </div>
 <?php include("footer.php"); ?>
