@@ -3,13 +3,7 @@
 	include("upload.php");
     
     $Success = true;
-    $Errors = array();
-    
-    // Verify the passwords match
-    if($pass != $vpass){
-        $Success = false;
-        $Errors[] = "Passwords do not match.";
-    }            
+    $Errors = array();          
     
     // Grab the database connection
     $db = new mysqli('localhost', 
@@ -27,6 +21,12 @@
     $gender= sanitize($_POST['gender'], $db); // Verify this
     $age   = sanitize($_POST['age'], $db);
     $loc   = sanitize($_POST['location'], $db);
+    
+    // Verify the passwords match
+    if($pass != $vpass){
+        $Success = false;
+        $Errors[] = "Passwords do not match.";
+    }  
                        
     // TODO: Make this more robustly visible to the user
 	if ( mysqli_connect_errno( ) )  {
