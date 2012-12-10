@@ -18,7 +18,8 @@
     $newVals['FirstName']  = sanitize($_POST['firstName'], $db);
     $newVals['LastName']  = sanitize($_POST['lastName'], $db);
     $newVals['Email']  = sanitize($_POST['email'], $db);
-    if(!isset($_FILES['avatar'])) {
+    //if(!isset($_FILES['avatar'])) {
+	if(!$_FILES['avatar']['size']) {
 		$newVals['ImageID'] = 0;
     } else {
 		$newVals['ImageID'] = upload('avatar');
