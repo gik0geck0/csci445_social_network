@@ -185,10 +185,12 @@
 					</td>
 				</tr>
 			</table>
-			<button type="submit">Update Profile</button>
+			<input type="button" value="Create Profile" id="submitButton" />
 		</form>
 	<?
 	} // end else
 	?>
 </div>
+<script src="profile.js" type="text/javascript"></script>
+<script src="validate.js" type="text/javascript"></script>
 <?php include("footer.php"); ?>
