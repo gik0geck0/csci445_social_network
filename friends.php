@@ -45,6 +45,12 @@
 				<a href="profile.php?target=<?= $UID ?>" ><?=$FirstName.' '.$LastName?></a>
 				<p><img src="image_file.php?image_id=<?= $ImageID ?>"></p>
 				<p><?=$Gender?></p>
+			   <form action="processFriend.php" method="POST" >
+					<input type="submit" value="Destroy Friendship" />
+					<input type="hidden" name="action" value="0" />
+					<input type="hidden" name="<? $_SESSION['user'] ?>" value="<?=$user ?>" />
+					<input type="hidden" name="target" value="<?=$UID ?>" />
+				</form>
 			</div>
 		<?php
 		}
