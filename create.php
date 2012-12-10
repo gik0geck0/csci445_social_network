@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<title>Create a Profile</title>
+		<script src="create.js" type="text/javascript"></script>
+		<script src="validate.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div>
@@ -112,7 +114,7 @@
 					</td>
 				</tr>
 			</table>
-			<button type="submit">Create Profile</button>
+			<input type="button" value="Create Profile" id="submitButton" />
 		</form>
 	</body>
 </html>

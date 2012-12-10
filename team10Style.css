@@ -5,3 +5,26 @@
     margin: 0.25em;
     padding: 0.5em;
 }
+
+.menulink{
+	margin-top: 1em;
+	padding: 0.1em;
+	border: 5px;
+	border-style: double;
+	border-color: black;
+}
+
+#statuses{
+	float: left;
+	margin: 1em;
+}
+
+#menu{
+	float: left;
+	margin: 1em;
+}
+
+#profileContainer{
+	float: left;
+	margin: 1em;
+}

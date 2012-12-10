@@ -1,6 +1,5 @@
 <?php include("headerLoggedin.php"); ?>
-<div id="statuses">
-</div>
+<div id="profileContainer">
 <div id="info">
 	<?php
 	/*TODO: make it so if the logged in user is the target user, they can edit their information
@@ -28,13 +27,13 @@
 	$info = $db->query($info_query);
 	if($info->num_rows != 0) {
 		$user_info = $info->fetch_assoc();
+		echo '<p><img src="image_file.php?image_id='.$user_info['ImageID'].'"></p>';
 		echo "<p>First Name: ".$user_info['FirstName']."</p>";
 		echo "<p>Last Name: ".$user_info['LastName']."</p>";
 		echo "<p>Gender: ".$user_info['Gender']."</p>";
 		echo "<p>Email: ".$user_info['Email']."</p>";
 		echo "<p>Age: ".$user_info['Age']."</p>";
 		echo "<p>Location: ".$user_info['Location']."</p>";
-		echo '<p><img src="image_file.php?image_id='.$user_info['ImageID'].'"></p>';
 	} else {
 		echo "invalid user requested";
 	}
@@ -189,12 +188,14 @@
 					</td>
 				</tr>
 			</table>
-			<button type="submit">Update Profile</button>
+			<input type="button" value="Update Profile" id="submitButton" />
 		</form>
 	<?
 	} // end else
 	?>
 </div>
+</div>
+<div id="statuses">
 <?
 	# list all the 5 most recent status updates by this user
 	$db = new mysqli('localhost',
@@ -285,4 +286,7 @@
 	}
 
 ?>
+</div>
+<script src="profile.js" type="text/javascript"></script>
+<script src="validate.js" type="text/javascript"></script>
 <?php include("footer.php"); ?>

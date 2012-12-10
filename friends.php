@@ -43,7 +43,7 @@
 		while($prepQuery->fetch()){?>
 			<div id="friend<?=$FirstName?>" class="friend">
 				<a href="profile.php?target=<?= $UID ?>" ><?=$FirstName.' '.$LastName?></a>
-				<p>Avatar: <?=$ImageID?></p>
+				<p><img src="image_file.php?image_id=<?= $ImageID ?>"></p>
 				<p><?=$Gender?></p>
 			</div>
 		<?php
@@ -68,7 +68,7 @@
 		while($prepQuery->fetch()){?>
 			<div id="pending<?=$FirstName?>" class="friend">
 				<a href="profile.php?target=<?= $UID ?>" ><?=$FirstName.' '.$LastName?></a>
-				<p>Avatar: <?=$ImageID?></p>
+				<p><img src="image_file.php?image_id=<?= $ImageID ?>"></p>
 				<p><?=$Gender?></p>
 			</div>
 		<?php
@@ -93,7 +93,7 @@
 		while($prepQuery->fetch()){?>
 			<div id="pending<?=$FirstName?>" class="friend">
 				<a href="profile.php?target=<?= $UID ?>" ><?=$FirstName.' '.$LastName?></a>
-				<p>Avatar: <?=$ImageID?></p>
+				<p><img src="image_file.php?image_id=<?= $ImageID ?>"></p>
 				<p><?=$Gender?></p>
 				<form action="processFriend.php" method="POST">
 					Accept:
