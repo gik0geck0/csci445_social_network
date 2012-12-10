@@ -78,12 +78,12 @@
 		}
 		?>
 		<div>
-			<table>
+			<table class="windows">
 				<?
 				while ($row = $result->fetch_assoc()) {
 				?>
 					<form action="processFriend.php" method="POST" >
-						<tr>
+						<tr >
 							<td>
 								<img width="20" height="20" src="image_file.php?image_id=<?= $row['ImageID'] ?>">
 							</td>

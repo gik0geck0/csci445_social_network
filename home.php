@@ -4,11 +4,19 @@
 	#echo "<p>logged in user UID: ".$_SESSION['user']."</p>";
 ?>
 
-<form action="postStatus.php" method="post">
-	Post new status: <input type="text" name="Content" />
+<div id="statuses">
+
+<form class="newStatus" action="postStatus.php" method="post">
+	<div class="windowHeader">
+		<img class="FlairClose" src="Flair_Close.png" alt="Close (not clickable" height="20" width="20">
+		<p class="windowHeaderText">Post new status:</p>
+	</div> 
+	<div>
+		<textarea class="statusTextArea" name="Content"></textarea>
+	</div>
 	<input type="hidden" name="UID" value="<?= $_SESSION['user'] ?>" />
 	<input type="hidden" name="Privacy" value="3" />
-	<input type="submit" value="Post" />
+	<input class="PostButton" type="submit" value="Post" />
 	<?php
 	if (isset($_GET['error'])) {
 		if ($_GET['error'] == 0) {
@@ -16,8 +24,6 @@
 		}
 	} ?>
 </form>
-
-<div id="statuses">
 <?
 	# list all the 20 most recent status updates by the current user, or friends
 	$db = new mysqli('localhost',
@@ -68,41 +74,48 @@
 	
 	while ($row = $statuses->fetch_assoc()) {
 		?>
-		<div class="status">
-			<p id="name"><?= $row['FirstName']." ".$row['LastName'] ?>:</p>
-			<p id="content"><?= $row['Content'] ?></p>
-			<div class="faded">
-				<?= $row['Post_time'] ?>
+		<div class="windows">
+			<div class="windowHeader">
+				<img class="FlairClose" src="Flair_Close.png" alt="Close (not clickable" height="20" width="20">
+				<p class="windowHeaderText">
+					<?= $row['FirstName']." ".$row['LastName'] ?> wrote:
+				</p>
 			</div>
-	
-			<?
-			$childCommentsQuery = "SELECT users.FirstName, users.LastName, statuses.* FROM statuses INNER JOIN users ON statuses.UID = users.UID WHERE Parent = ".$row['SID']." ORDER BY Post_time";
-
-			$comments = $db->query($childCommentsQuery);
-			if (!$comments) {
-				echo "Error looking for comments: ".$db->error;
-			}
-			while ($comment = $comments->fetch_assoc()) {
-				?>
-				<div class="comment">
-					<p id="name"><?= $comment['FirstName']." ".$comment['LastName'] ?>:</p>
-					<p id="content"><?= $comment['Content'] ?></p>
-					<div class="faded">
-						<?= $comment['Post_time'] ?>
-					</div>
+			<div class="statusBody">
+				<p class="statusContent"><?= $row['Content'] ?></p>
+				<div class="faded">
+					<?= $row['Post_time'] ?>
 				</div>
-			<?
-			}
-			?>
+		
+				<?
+				$childCommentsQuery = "SELECT users.FirstName, users.LastName, statuses.* FROM statuses INNER JOIN users ON statuses.UID = users.UID WHERE Parent = ".$row['SID']." ORDER BY Post_time";
 
-			<form action="postStatus.php" method="post">
-				Comment on status:
-				<input type="text" name="Content" />
-				<input type="hidden" name="UID" value="<?= $_SESSION['user'] ?>" />
-				<input type="hidden" name="Privacy" value="3" />
-				<input type="hidden" name="Parent" value="<?= $row['SID'] ?>" />
-				<input type="submit" value="Comment"/>
-			</form>
+				$comments = $db->query($childCommentsQuery);
+				if (!$comments) {
+					echo "Error looking for comments: ".$db->error;
+				}
+				while ($comment = $comments->fetch_assoc()) {
+					?>
+					<div class="comment">
+						<p id="name"><?= $comment['FirstName']." ".$comment['LastName'] ?>:</p>
+						<p id="content"><?= $comment['Content'] ?></p>
+						<div class="faded">
+							<?= $comment['Post_time'] ?>
+						</div>
+					</div>
+				<?
+				}
+				?>
+
+				<form action="postStatus.php" method="post">
+					Comment on status:
+					<input type="text" name="Content" />
+					<input type="hidden" name="UID" value="<?= $_SESSION['user'] ?>" />
+					<input type="hidden" name="Privacy" value="3" />
+					<input type="hidden" name="Parent" value="<?= $row['SID'] ?>" />
+					<input type="submit" value="Comment"/>
+				</form>
+			</div>
 		</div>
 		<?
 	}

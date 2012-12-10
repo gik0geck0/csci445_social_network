@@ -1,11 +1,11 @@
 <?php include("header.php") ?>
 <div>
-	<h1>Welcome to YASMS!</h1>
+	<h1>Welcome to The Social Network (v3.1)!</h1>
 	<p>
-		YASMS is Yet Another Social Media Site! By having an account, you will be able to find friends who are online, chat with them, share photos with them, and view their status updates.
+		The Social Network is a Classic spin on social media sites! By having an account, you will be able to find friends who are online, chat with them, share photos with them, and view their status updates.
 	</p>
 	<p>
-		Why choose YASMS over other sites? Simple: unlike our competitors, we haven't been taken over by trolls, internet memes, or your parents.
+		Why choose The Social Network (v3.1) over other sites? Simple: unlike our competitors, we haven't been taken over by trolls, internet memes, or your parents.
 	</p>
 </div>
 <form name="loginForm" action="validateLogin.php" method="post">

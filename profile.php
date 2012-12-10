@@ -27,13 +27,22 @@
 	$info = $db->query($info_query);
 	if($info->num_rows != 0) {
 		$user_info = $info->fetch_assoc();
-		echo '<p><img src="image_file.php?image_id='.$user_info['ImageID'].'"></p>';
-		echo "<p>First Name: ".$user_info['FirstName']."</p>";
-		echo "<p>Last Name: ".$user_info['LastName']."</p>";
-		echo "<p>Gender: ".$user_info['Gender']."</p>";
-		echo "<p>Email: ".$user_info['Email']."</p>";
-		echo "<p>Age: ".$user_info['Age']."</p>";
-		echo "<p>Location: ".$user_info['Location']."</p>";
+		echo "<div class='windows'>";
+		echo 	"<div class='windowHeader'>"
+				.'<img class="FlairClose" src="Flair_Close.png" alt="Close (not clickable" height="20" width="20">'
+				.'<p class="windowHeaderText">'
+				.'Profile Information:'
+				.'</p></div>';
+		echo	"<div class='statusBody'>";
+		echo 		'<p><img src="image_file.php?image_id='.$user_info['ImageID'].'"></p>';
+		echo 		"<p>First Name: ".$user_info['FirstName']."</p>";
+		echo 		"<p>Last Name: ".$user_info['LastName']."</p>";
+		echo 		"<p>Gender: ".$user_info['Gender']."</p>";
+		echo 		"<p>Email: ".$user_info['Email']."</p>";
+		echo 		"<p>Age: ".$user_info['Age']."</p>";
+		echo 		"<p>Location: ".$user_info['Location']."</p>";
+		echo	"</div>";
+		echo "</div>";
 	} else {
 		echo "invalid user requested";
 	}
@@ -59,137 +68,145 @@
 			}
 		}
 		?>
-	   <form action="processFriend.php" method="POST" ><?
-					if ($targetOnUser == 1) {
-						# they are awaiting a response
+		<div class="windows">
+			<form action="processFriend.php" method="POST" ><?
+						if ($targetOnUser == 1) {
+							# they are awaiting a response
+							?>
+							Would you like to be his/her friend?
+							<table>
+								<tr>
+									<td>Accept</td>
+									<td>Decline</td>
+								</tr>
+								<tr>
+									<td><input type="radio" name="action" value="2"></td>
+									<td><input type="radio" name="action" value="0"></td>
+									<td><input type="submit" value="Send Response"></td>
+								</tr>
+							</table>
+							<?
+						} elseif ($userOnTarget == 2 and $targetOnUser == 2) {
+							# you already have a mutual friendship
+							?>
+							You are already friends!
+							<input type="submit" value="Destroy Friendship" />
+							<input type="hidden" name="action" value="0" />
+							<?
+						} elseif ($userOnTarget == 1) {
+							# you have already sent out a pending request
+							?>
+							Waiting for acceptance
+							<input type="submit" value="Cancel Request" />
+							<input type="hidden" name="action" value="0" />
+							<?
+						} elseif ($userOnTarget <= 0 and $targetOnUser <= 0) {
+							# no friendship at all.
+							?>
+							<input type="submit" value="Send friendship request" />
+							<?
+						}
+						# else does nothing.. makes a problem more visible
 						?>
-						Would you like to be his/her friend?
-						<table>
-							<tr>
-								<td>Accept</td>
-								<td>Decline</td>
-							</tr>
-							<tr>
-								<td><input type="radio" name="action" value="2"></td>
-								<td><input type="radio" name="action" value="0"></td>
-								<td><input type="submit" value="Send Response"></td>
-							</tr>
-						</table>
-						<?
-					} elseif ($userOnTarget == 2 and $targetOnUser == 2) {
-						# you already have a mutual friendship
-						?>
-						You are already friends!
-						<input type="submit" value="Destroy Friendship" />
-						<input type="hidden" name="action" value="0" />
-						<?
-					} elseif ($userOnTarget == 1) {
-						# you have already sent out a pending request
-						?>
-						Waiting for acceptance
-						<input type="submit" value="Cancel Request" />
-						<input type="hidden" name="action" value="0" />
-						<?
-					} elseif ($userOnTarget <= 0 and $targetOnUser <= 0) {
-						# no friendship at all.
-						?>
-						<input type="submit" value="Send friendship request" />
-						<?
-					}
-					# else does nothing.. makes a problem more visible
-					?>
-					<input type="hidden" name="user" value="<?=$user ?>" />
-					<input type="hidden" name="target" value="<?=$target_user ?>" />
+						<input type="hidden" name="user" value="<?=$user ?>" />
+						<input type="hidden" name="target" value="<?=$target_user ?>" />
 		</form>
+		</div>
 	<?
 	}	// end if user <> target_user
 	else {
 	?>
-		<form enctype="multipart/form-data" name="updateUser" action="processUpdate.php" method="POST">
-			<table>
-				<tr>
-					<td>
-						First Name: 
-					</td>
-					<td>
-						<input type="text" name="firstName">
-					</td>
-					<td>
-						<div id="firstNameError"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Last Name:
-					</td>
-					<td>
-						<input type="text" name="lastName">
-					</td>
-					<td>
-						<div id="lastNameError"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Email:
-					</td>
-					<td>
-						<input type="text" name="email">
-					</td>
-					<td>
-						<div id="emailError"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Avatar:
-					</td>
-					<td>
-						<input type="file" name="avatar">
-						<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-					</td>
-					<td>
-						<div id="avatarError"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Gender:
-					</td>
-					<td>
-						Male: <input type="radio" name="gender" value="Male" checked = "true"> 
-						Female: <input type="radio" name="gender" value="Female">
-						Other: <input type="radio" name="gender" value="Other">
-					</td>
-					<td>
-						<div id="genderError"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Age:
-					</td>
-					<td>
-						<input type="text" name="age" width="3">
-					</td>
-					<td>
-						<div id="ageError"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Location:
-					</td>
-					<td>
-						<input type="text" name="location">
-					</td>
-					<td>
-						<div id="locationError"></div>
-					</td>
-				</tr>
-			</table>
-			<input type="button" value="Update Profile" id="submitButton" />
-		</form>
+		<div class="windows">
+			<div class="windowHeader">
+				<img class="FlairClose" src="Flair_Close.png" alt="Close (not clickable" height="20" width="20">
+				<p class="windowHeaderText">Update Your Profile:</p>
+			</div> 
+			<form enctype="multipart/form-data" name="updateUser" action="processUpdate.php" method="POST">
+				<table>
+					<tr>
+						<td>
+							First Name: 
+						</td>
+						<td>
+							<input type="text" name="firstName">
+						</td>
+						<td>
+							<div id="firstNameError"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Last Name:
+						</td>
+						<td>
+							<input type="text" name="lastName">
+						</td>
+						<td>
+							<div id="lastNameError"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Email:
+						</td>
+						<td>
+							<input type="text" name="email">
+						</td>
+						<td>
+							<div id="emailError"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Avatar:
+						</td>
+						<td>
+							<input type="file" name="avatar">
+							<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
+						</td>
+						<td>
+							<div id="avatarError"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Gender:
+						</td>
+						<td>
+							Male: <input type="radio" name="gender" value="Male" checked = "true"> 
+							Female: <input type="radio" name="gender" value="Female">
+							Other: <input type="radio" name="gender" value="Other">
+						</td>
+						<td>
+							<div id="genderError"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Age:
+						</td>
+						<td>
+							<input type="text" name="age" width="3">
+						</td>
+						<td>
+							<div id="ageError"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Location:
+						</td>
+						<td>
+							<input type="text" name="location">
+						</td>
+						<td>
+							<div id="locationError"></div>
+						</td>
+					</tr>
+				</table>
+				<input type="button" value="Update Profile" id="submitButton" />
+			</form>
+		</div>
 	<?
 	} // end else
 	?>
@@ -221,41 +238,48 @@
 	
 	while ($row = $statuses->fetch_assoc()) {
 		?>
-		<div class="status">
-			<?= $row['FirstName']." ".$row['LastName'] ?>:<br/>
-			<?= $row['Content'] ?><br/>
-			<div class="faded">
-				<?= $row['Post_time'] ?>
+		<div class="windows">
+			<div class="windowHeader">
+				<img class="FlairClose" src="Flair_Close.png" alt="Close (not clickable" height="20" width="20">
+				<p class="windowHeaderText">
+					<?= $row['FirstName']." ".$row['LastName'] ?> wrote:
+				</p>
 			</div>
-	
-			<?
-			$childCommentsQuery = "SELECT users.FirstName, users.LastName, statuses.* FROM statuses INNER JOIN users ON statuses.UID = users.UID WHERE Parent = ".$row['SID']." ORDER BY Post_time";
-
-			$comments = $db->query($childCommentsQuery);
-			if (!$comments) {
-				echo "Error looking for comments: ".$db->error;
-			}
-			while ($comment = $comments->fetch_assoc()) {
-				?>
-				<div class="comment">
-					<?= $comment['FirstName']." ".$comment['LastName'] ?>:<br/>
-					<?= $comment['Content'] ?><br/>
-					<div class="faded">
-						<?= $comment['Post_time'] ?>
-					</div>
+			<div class="statusBody">
+				<p class="statusContent"><?= $row['Content'] ?></p>
+				<div class="faded">
+					<?= $row['Post_time'] ?>
 				</div>
-			<?
-			}
-			?>
+	
+				<?
+				$childCommentsQuery = "SELECT users.FirstName, users.LastName, statuses.* FROM statuses INNER JOIN users ON statuses.UID = users.UID WHERE Parent = ".$row['SID']." ORDER BY Post_time";
 
-			<form action="postStatus.php" method="post">
-				Comment on status:
-				<input type="text" name="Content" />
-				<input type="hidden" name="UID" value="<?= $_SESSION['user'] ?>" />
-				<input type="hidden" name="Privacy" value="3" />
-				<input type="hidden" name="Parent" value="<?= $row['SID'] ?>" />
-				<input type="submit" value="Comment"/>
-			</form>
+				$comments = $db->query($childCommentsQuery);
+				if (!$comments) {
+					echo "Error looking for comments: ".$db->error;
+				}
+				while ($comment = $comments->fetch_assoc()) {
+					?>
+					<div class="comment">
+						<p id="name"><?= $comment['FirstName']." ".$comment['LastName'] ?>:</p>
+						<p id="content"><?= $comment['Content'] ?></p>
+						<div class="faded">
+							<?= $comment['Post_time'] ?>
+						</div>
+					</div>
+				<?
+				}
+				?>
+
+				<form action="postStatus.php" method="post">
+					Comment on status:
+					<input type="text" name="Content" />
+					<input type="hidden" name="UID" value="<?= $_SESSION['user'] ?>" />
+					<input type="hidden" name="Privacy" value="3" />
+					<input type="hidden" name="Parent" value="<?= $row['SID'] ?>" />
+					<input type="submit" value="Comment"/>
+				</form>
+			</div>
 		</div>
 		<?
 	}
