@@ -209,33 +209,8 @@
 		$Errors[] = "Error connecting to server (database).";
 		exit();
 	}
-
-	$friendsQuery = "SELECT DISTINCT friendships.Target FROM friendships WHERE friendships.User = ".$_SESSION['user']." AND friendships.Status = 2";
-	$friendResult = $db->query($friendsQuery);
-	if (!$friendResult) {
-		echo "Cannot search for statuses right now. Please try again later <br/>";
-		echo "Error: ".$db->error;
-		exit();
-	}
 	#echo "Successfully queried for friends.";
-	$statusQuery = "SELECT users.FirstName, users.LastName, statuses.* FROM statuses INNER JOIN users ON statuses.UID = users.UID WHERE statuses.UID IN (".$_SESSION['user'];
-	$tgts = array();
-	while ($row = $friendResult->fetch_assoc()) {
-		$tgts[] = $row['Target'];
-	}
-	#echo "Friends are: $tgts";
-	$index = 0;
-	while ($index < count($tgts)) {
-		if ($index == 0) {
-			$statusQuery .= ", ";
-		}
-		$statusQuery .= $tgts[$index];
-		if ($index < count($tgts)-1) {
-			$statusQuery .= ", ";
-		}
-		$index = $index + 1;
-	}
-	$statusQuery .= ") AND statuses.Parent IS NULL ORDER BY statuses.Post_time DESC LIMIT 20";
+	$statusQuery = "SELECT users.FirstName, users.LastName, statuses.* FROM statuses INNER JOIN users ON statuses.UID = users.UID WHERE statuses.UID = ".$target_user." AND statuses.Parent IS NULL ORDER BY statuses.Post_time DESC LIMIT 5";
 	#echo "Status query: ".$statusQuery;
 
 	$statuses = $db->query($statusQuery);
