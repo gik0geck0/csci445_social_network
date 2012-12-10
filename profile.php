@@ -70,8 +70,8 @@
 								<td>Decline</td>
 							</tr>
 							<tr>
-								<td><input type="radio" name="acceptDeny" value="2"></td>
-								<td><input type="radio" name="acceptDeny" value="0"></td>
+								<td><input type="radio" name="action" value="2"></td>
+								<td><input type="radio" name="action" value="0"></td>
 								<td><input type="submit" value="Send Response"></td>
 							</tr>
 						</table>
@@ -80,11 +80,15 @@
 						# you already have a mutual friendship
 						?>
 						You are already friends!
+						<input type="submit" value="Destroy Friendship" />
+						<input type="hidden" name="action" value="0" />
 						<?
 					} elseif ($userOnTarget == 1) {
 						# you have already sent out a pending request
 						?>
 						Waiting for acceptance
+						<input type="submit" value="Cancel Request" />
+						<input type="hidden" name="action" value="0" />
 						<?
 					} elseif ($userOnTarget <= 0 and $targetOnUser <= 0) {
 						# no friendship at all.
