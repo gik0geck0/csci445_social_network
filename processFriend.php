@@ -30,7 +30,14 @@
         $check_confirmed_query = "select FID from friendships where user = ".$user." and target = ".$target_user." and Status = 2";
         $confirmed = $db->query($check_confirmed_query);
         if($confirmed->num_rows != 0) {
-            header("Location: friends.php?message=1");
+			if ($action == -1 || $action == 1) {
+				# user and target are already friends, and they would like to stay that way.
+				header("Location: friends.php?message=1");
+			} else {
+				# if action = 0, remove friendship.
+				$changeFriendship = "UPDATE friendships SET Status = ".$action." WHERE (User = ".$user/" AND Target = ".$target_user.") OR (User = ".$target_user." AND Target = ".$user.")";
+				$db->query($changeFriendship);
+			}
             //header("Location: search.php?message=1");
             //echo "that friendship already exists and is confirmed";
             //exit;
