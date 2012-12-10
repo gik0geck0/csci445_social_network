@@ -19,6 +19,10 @@
    
           // get the image info..
           $size = getimagesize($_FILES[$filename]['tmp_name']);
+          if($size[0] > 170 || $size[1] > 170) {
+            echo "Image dimensions too big, must be smaller than 170x170";
+            exit;
+          }
    
           // put the image in the db...
           // database connection
