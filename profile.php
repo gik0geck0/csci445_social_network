@@ -102,7 +102,7 @@
 	}	// end if user <> target_user
 	else {
 	?>
-		<form action="processUpdate.php" method="POST">
+		<form enctype="multipart/form-data" name="updateUser" action="processUpdate.php" method="POST">
 			<table>
 				<tr>
 					<td>
@@ -143,6 +143,7 @@
 					</td>
 					<td>
 						<input type="file" name="avatar">
+						<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
 					</td>
 					<td>
 						<div id="avatarError"></div>
