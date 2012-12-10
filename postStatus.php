@@ -18,16 +18,15 @@
 	if ($_POST['Parent']) {
 		$sParent = sanitize($_POST['Parent'], $db);
 	} else {
-		$sParent = NULL;
+		$sParent = "NULL";
 	}
 
-	$addStatusQuery = "INSERT INTO statuses VALUES (NULL, $sUID, '$scontent', $sprivacy, $sParent, now())";
+	$addStatusQuery = "INSERT INTO statuses VALUES (NULL, $sUID, '$scontent', $sprivacy, $sParent, Now())";
 	$result = $db->query($addStatusQuery);
 
 	if (!$result) {
 		echo "Error: ".$db->error;
 	} else {
-		echo "Status has been posted";
-		header("home.php?error=0");
+		header("Location: home.php");
 	}
 ?>
