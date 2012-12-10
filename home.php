@@ -56,7 +56,7 @@
 		}
 		$index = $index + 1;
 	}
-	$statusQuery .= ") AND statuses.Parent IS NULL ORDER BY statuses.Post_time LIMIT 10";
+	$statusQuery .= ") AND statuses.Parent IS NULL ORDER BY statuses.Post_time DESC LIMIT 20";
 	#echo "Status query: ".$statusQuery;
 
 	$statuses = $db->query($statusQuery);
@@ -84,10 +84,10 @@
 			while ($comment = $comments->fetch_assoc()) {
 				?>
 				<div class="comment">
-					<?= $row['FirstName']." ".$row['LastName'] ?>:<br/>
-					<?= $row['Content'] ?><br/>
+					<?= $comment['FirstName']." ".$comment['LastName'] ?>:<br/>
+					<?= $comment['Content'] ?><br/>
 					<div class="faded">
-						<?= $row['Post_time'] ?>
+						<?= $comment['Post_time'] ?>
 					</div>
 				</div>
 			<?
